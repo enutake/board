@@ -1,0 +1,11 @@
+docker/.env
+docker/db/root/.bash_history
+docker/db/root/.mysql_history
+docker/web/root/.bash_history
+docker/web/root/.mysql_history
+docker/web/root/.node_repl_history
+docker/web/root/.viminfo
+docker/web/root/.composer/
+docker/web/root/.config/
+docker/web/root/.npm/
+docker/web/root/.vim/.netrwhist
