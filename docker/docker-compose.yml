@@ -1,0 +1,24 @@
+version: "3"
+services:
+  web:
+    build: ./web/
+    hostname: web-server
+    volumes:
+      - ../src/board:/var/www/html
+      - ./web/root:/root
+      - ./web/workspace:/workspace
+    ports:
+      - 80:80
+      - 443:443
+    tty: true
+  db:
+    build: ./db/
+    hostname: db-server
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./db/root:/root
+      - ./db/workspace:/workspace
+    ports:
+      - 43306:3306
+    tty: true
