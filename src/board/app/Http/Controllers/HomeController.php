@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
+use stdClass;
 
 class HomeController extends Controller
 {
@@ -20,6 +22,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $data = new stdClass;
+        $Question = new Question;
+        $data->questions = $Question::all();
+        return view('home', ['data' => $data]);
     }
 }
