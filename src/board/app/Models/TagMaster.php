@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,11 +19,11 @@ class TagMaster extends Model
     
     public function questions()
     {
-        return $this->belongsToMany('App\Question', 'questions', 'id', 'id');
+        return $this->belongsToMany('App\Models\Question', 'questions', 'id', 'id');
     }
     
     public function answers()
     {
-        return $this->belongsToMany('App\Answer', 'answers', 'id', 'id');
+        return $this->belongsToMany('App\Models\Answer', 'answers', 'id', 'id');
     }
 }

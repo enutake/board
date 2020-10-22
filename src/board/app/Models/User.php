@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -39,11 +39,11 @@ class User extends Authenticatable
 
     public function questions()
     {
-        return $this->hasMany('App\Question');
+        return $this->hasMany('App\Models\Question');
     }
 
     public function answers()
     {
-        return $this->hasMany('App\Answer');
+        return $this->hasMany('App\Models\Answer');
     }
 }
