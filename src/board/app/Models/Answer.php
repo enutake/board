@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
+class Answer extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,9 +12,9 @@ class Question extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 
         'content', 
         'user_id',
+        'question_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -22,16 +22,16 @@ class Question extends Model
 
     public function users()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function answers()
     {
-        return $this->hasMany('App\Answer');
+        return $this->belongsTo('App\Models\Question');
     }
 
     public function tagMasters()
     {
-        return $this->belongsToMany('App\TagMaster', 'tag_masters', 'id', 'id');
+        return $this->belongsToMany('App\Models\TagMaster', 'tag_masters', 'id', 'id');
     }
 }
