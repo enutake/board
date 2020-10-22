@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Services\QuestionService;
 use Illuminate\Http\Request;
 use stdClass;
 
@@ -13,7 +14,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct(){}
+    public function __construct(QuestionService $QuestionService)
+    {
+        $this->QuestionService = $QuestionService;
+    }
 
     /**
      * Show the application dashboard.
@@ -23,8 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $data = new stdClass;
-        $Question = new Question;
-        $data->questions = $Question::all();
+        $data->questions = $this->QuestionService->getQuestionListForTop();
         return view('home', ['data' => $data]);
     }
 }
