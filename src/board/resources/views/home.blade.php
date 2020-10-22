@@ -12,7 +12,7 @@
                     <div class="card-text mb-3">
                         {{ $question->content }}
                     </div>
-                    <div class="card-more-detail text-center"><a class="btn btn-primary stretched-link" href="">この質問の回答を見る</a></div>
+                    <div class="card-more-detail text-center"><a class="btn btn-primary stretched-link" href="{{ route('question.show', $question->id) }}">この質問の回答を見る</a></div>
                 </div>
             </div>
             @endforeach
