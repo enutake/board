@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use stdClass;
 
 class QuestionController extends Controller
 {
@@ -45,7 +46,8 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = new stdClass;
+        return view('question', ['data' => $data]);
     }
 
     /**
