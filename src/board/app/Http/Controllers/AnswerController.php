@@ -63,7 +63,6 @@ class AnswerController extends Controller
     {
         $request->session()->regenerate();
 
-        $Answer = new Answer;
         $questionId = $request->session()->get('questionId');
 
         $validator = Validator::make($request->all(), [
@@ -77,13 +76,8 @@ class AnswerController extends Controller
                         ->withInput();
         }
 
-        $Answer::create(
-            [
-                'content'     => $request->input('content'),
-                'user_id'     => $request->session()->get('userId'),
-                'question_id' => $questionId,
-            ],
-        );
+        $this->AnswerService->storeAnswer($request->input('content'), $request->session()->get('userId'), $questionId);
+
         $request->session()->forget('questionId');
         return redirect()->route('question.show', $questionId);
     }
