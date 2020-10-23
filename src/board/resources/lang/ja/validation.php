@@ -150,6 +150,7 @@ return [
         "password" => "パスワード",
         "password_confirmation" => "パスワード(確認用)",
         "email" => "メールアドレス",
+        "content" => "投稿内容",
     ],
 
 ];

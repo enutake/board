@@ -2,10 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnswerRequest;
+use App\Models\Answer;
+use App\Services\AnswerService;
+use App\Services\QuestionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use stdClass;
 
 class AnswerController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct(QuestionService $QuestionService, AnswerService $AnswerService)
+    {
+        $this->QuestionService = $QuestionService;
+        $this->AnswerService   = $AnswerService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,9 +39,19 @@ class AnswerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($questionId)
+    public function create(Request $request, $questionId)
     {
-        return view('answer');
+        $userId = Auth::id();
+        session(
+            [
+                'userId' => $userId,
+                'questionId' => $questionId
+            ],
+        );
+
+        $data = new stdClass;
+        $data->question = $this->QuestionService->getQuestionDetail($questionId);
+        return view('answer', ['data' => $data]);
     }
 
     /**
@@ -32,9 +60,15 @@ class AnswerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AnswerRequest $request)
     {
-        //
+        $request->session()->regenerate();
+
+        $questionId = $request->session()->get('questionId');
+        $this->AnswerService->storeAnswer($request->input('content'), $request->session()->get('userId'), $questionId);
+
+        $request->session()->forget('questionId');
+        return redirect()->route('question.show', $questionId);
     }
 
     /**
