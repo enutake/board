@@ -14,7 +14,7 @@
                     <div class="card-user text-right small">{{ $data->question->users->name }}さん</div>
                 </div>
             </div>
-            <div class="text-center mb-4"><a href="" class="answer-question-btn btn btn-primary text-center">この質問に回答する</a></div>
+            <div class="text-center mb-4"><a href="{{ route('answer.create', $data->question->id) }}" class="answer-question-btn btn btn-primary text-center">この質問に回答する</a></div>
             @foreach($data->answers as $answer)
             <div class="card mb-4">
                 <div class="card-body">

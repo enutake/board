@@ -18,3 +18,4 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/questions/{question}', 'QuestionController@show')->name('question.show');
+Route::get('/questions/{question}/answers/new', 'AnswerController@create')->middleware('auth')->name('answer.create');
