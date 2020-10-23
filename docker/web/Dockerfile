@@ -18,14 +18,14 @@ libpq-dev \
 default-mysql-client \
 && docker-php-ext-install pdo_mysql
 
-# node, npm最新化(nを利用する)
-RUN apt install -y nodejs npm \
-&& npm install -g n \
-&& n stable \
-&& apt purge -y nodejs npm \
-&& exec $SHELL -l \
-&& npm -v \
-&& nodejs -v
+# # node, npm最新化(nを利用する)
+# RUN apt install -y nodejs npm \
+# && npm install -g n \
+# && n stable \
+# && apt purge -y nodejs npm \
+# && exec $SHELL -l \
+# && npm -v \
+# && nodejs -v
 
 # modRewriteを有効化する
 RUN mv /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled
