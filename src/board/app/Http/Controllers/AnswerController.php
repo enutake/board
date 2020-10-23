@@ -41,8 +41,10 @@ class AnswerController extends Controller
     {
         $userId = Auth::id();
         session(
-            ['userId' => $userId],
-            ['questionId' => $questionId],
+            [
+                'userId' => $userId,
+                'questionId' => $questionId
+            ],
         );
 
         $data = new stdClass;
@@ -70,7 +72,7 @@ class AnswerController extends Controller
                 'question_id' => $questionId,
             ],
         );
-        $request->session()->flush();
+        $request->session()->forget('questionId');
         return redirect()->route('question.show', $questionId);
     }
 
