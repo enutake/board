@@ -25,9 +25,9 @@ class Answer extends Model
         return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
-    public function answers()
+    public function questions()
     {
-        return $this->belongsTo('App\Models\Question');
+        return $this->belongsTo('App\Models\Question', 'question_id', 'id');
     }
 
     public function tagMasters()
