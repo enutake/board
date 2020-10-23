@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answer;
+use App\Services\AnswerService;
 use App\Services\QuestionService;
 use Illuminate\Http\Request;
 use stdClass;
@@ -14,9 +15,10 @@ class QuestionController extends Controller
      *
      * @return void
      */
-    public function __construct(QuestionService $QuestionService)
+    public function __construct(QuestionService $QuestionService, AnswerService $AnswerService)
     {
         $this->QuestionService = $QuestionService;
+        $this->AnswerService   = $AnswerService;
     }
 
     /**
@@ -60,9 +62,8 @@ class QuestionController extends Controller
     {
         $data = new stdClass;
         $data->question = $this->QuestionService->getQuestionDetail($id);
-        $Answer = new Answer;
-        $data->answers  = $Answer::where('question_id', $id)->get();
-        
+        $data->answers  = $this->AnswerService->getAnswerListForQuestionPage($id);
+
         return view('question', ['data' => $data]);
     }
 
