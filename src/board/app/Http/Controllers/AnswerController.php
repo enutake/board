@@ -7,6 +7,7 @@ use App\Services\AnswerService;
 use App\Services\QuestionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use stdClass;
 
 class AnswerController extends Controller
@@ -64,6 +65,17 @@ class AnswerController extends Controller
 
         $Answer = new Answer;
         $questionId = $request->session()->get('questionId');
+
+        $validator = Validator::make($request->all(), [
+            'content' => ['required', 'min:20', 'max:300'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                        ->route('answer.create', $questionId)
+                        ->withErrors($validator)
+                        ->withInput();
+        }
 
         $Answer::create(
             [
