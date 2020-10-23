@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnswerRequest;
 use App\Models\Answer;
 use App\Services\AnswerService;
 use App\Services\QuestionService;
@@ -59,23 +60,11 @@ class AnswerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AnswerRequest $request)
     {
         $request->session()->regenerate();
 
         $questionId = $request->session()->get('questionId');
-
-        $validator = Validator::make($request->all(), [
-            'content' => ['required', 'min:10', 'max:300'],
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()
-                        ->route('answer.create', $questionId)
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-
         $this->AnswerService->storeAnswer($request->input('content'), $request->session()->get('userId'), $questionId);
 
         $request->session()->forget('questionId');
