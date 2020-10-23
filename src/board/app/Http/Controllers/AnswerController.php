@@ -66,7 +66,7 @@ class AnswerController extends Controller
         $questionId = $request->session()->get('questionId');
 
         $validator = Validator::make($request->all(), [
-            'content' => ['required', 'min:20', 'max:300'],
+            'content' => ['required', 'min:10', 'max:300'],
         ]);
 
         if ($validator->fails()) {
