@@ -2,11 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
+use App\Services\QuestionService;
 use Illuminate\Http\Request;
 use stdClass;
 
 class QuestionController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct(QuestionService $QuestionService)
+    {
+        $this->QuestionService = $QuestionService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -47,6 +59,10 @@ class QuestionController extends Controller
     public function show($id)
     {
         $data = new stdClass;
+        $data->question = $this->QuestionService->getQuestionDetail($id);
+        $Answer = new Answer;
+        $data->answers  = $Answer::where('question_id', $id)->get();
+        
         return view('question', ['data' => $data]);
     }
 
