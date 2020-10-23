@@ -19,8 +19,8 @@
                     <div class="card-header">回答する</div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="textarea1">回答内容:</label>
-                            <textarea id="textarea1" class="form-control"></textarea>
+                            <label for="answer-content">回答内容:</label>
+                            <textarea id="answer-content" name="content" class="form-control"></textarea>
                         </div>
                         <div class="text-center"><button type="submit" class="btn btn-primary mb-2">回答する</button></div>
                     </div>

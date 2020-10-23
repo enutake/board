@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Services\AnswerService;
 use App\Services\QuestionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use stdClass;
 
 class AnswerController extends Controller
@@ -35,8 +37,14 @@ class AnswerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($questionId)
+    public function create(Request $request, $questionId)
     {
+        $userId = Auth::id();
+        session(
+            ['userId' => $userId],
+            ['questionId' => $questionId],
+        );
+
         $data = new stdClass;
         $data->question = $this->QuestionService->getQuestionDetail($questionId);
         return view('answer', ['data' => $data]);
@@ -50,7 +58,20 @@ class AnswerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->session()->regenerate();
+
+        $Answer = new Answer;
+        $questionId = $request->session()->get('questionId');
+
+        $Answer::create(
+            [
+                'content'     => $request->input('content'),
+                'user_id'     => $request->session()->get('userId'),
+                'question_id' => $questionId,
+            ],
+        );
+        $request->session()->flush();
+        return redirect()->route('question.show', $questionId);
     }
 
     /**
