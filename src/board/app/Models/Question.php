@@ -22,7 +22,7 @@ class Question extends Model
 
     public function users()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
     public function answers()

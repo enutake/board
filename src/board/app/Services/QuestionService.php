@@ -15,4 +15,13 @@ class QuestionService
         $questionList = Question::take($toppageQuestionCount)->get();
         return $questionList;
     }
+
+    /**
+     * 質問詳細を取得する
+     */
+    public function getQuestionDetail($questionId)
+    {
+        $questionDetail = Question::find($questionId);
+        return $questionDetail;
+    }
 }

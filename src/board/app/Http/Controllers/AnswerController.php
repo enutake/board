@@ -2,25 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Answer;
-use App\Services\AnswerService;
-use App\Services\QuestionService;
 use Illuminate\Http\Request;
-use stdClass;
 
-class QuestionController extends Controller
+class AnswerController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct(QuestionService $QuestionService, AnswerService $AnswerService)
-    {
-        $this->QuestionService = $QuestionService;
-        $this->AnswerService   = $AnswerService;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -36,9 +21,9 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($questionId)
     {
-        //
+        return view('answer');
     }
 
     /**
@@ -60,11 +45,7 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        $data = new stdClass;
-        $data->question = $this->QuestionService->getQuestionDetail($id);
-        $data->answers  = $this->AnswerService->getAnswerListForQuestionPage($id);
-
-        return view('question', ['data' => $data]);
+        //
     }
 
     /**
