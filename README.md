@@ -1,4 +1,6 @@
 # board
+## URL
+https://boardboard.tokyo
 
 ## 概要
 Laravelで作成したシンプルなQ&Aアプリ
