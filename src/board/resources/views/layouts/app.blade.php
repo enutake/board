@@ -60,6 +60,9 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('ログアウト') }}
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('question.create') }}">
+                                        {{ __('質問を投稿する') }}
+                                    </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

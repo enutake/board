@@ -6,6 +6,7 @@ use App\Models\Answer;
 use App\Services\AnswerService;
 use App\Services\QuestionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use stdClass;
 
 class QuestionController extends Controller
@@ -38,7 +39,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        return view('question.create');
     }
 
     /**
@@ -49,7 +50,13 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //TODO: バリデーションを後で追加する
+        $title   = $request->input('title');
+        $content = $request->input('content');
+        $userId  = Auth::id();
+        $result = $this->QuestionService->storeQuestion($title, $content, $userId);
+
+        return redirect()->route('question.show', $result->id);
     }
 
     /**
@@ -64,7 +71,7 @@ class QuestionController extends Controller
         $data->question = $this->QuestionService->getQuestionDetail($id);
         $data->answers  = $this->AnswerService->getAnswerListForQuestionPage($id);
 
-        return view('question', ['data' => $data]);
+        return view('question.index', ['data' => $data]);
     }
 
     /**
