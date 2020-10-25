@@ -19,6 +19,10 @@
                     <div class="card-header">質問する</div>
                     <div class="card-body">
                         <div class="form-group">
+                            <label for="question-title">タイトル:</label>
+                            <input type="text" id="question-title" name="title" class="form-control">
+                        </div>
+                        <div class="form-group">
                             <label for="question-content">質問内容:</label>
                             <textarea id="question-content" name="content" class="form-control"></textarea>
                         </div>

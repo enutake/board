@@ -6,6 +6,7 @@ use App\Models\Answer;
 use App\Services\AnswerService;
 use App\Services\QuestionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use stdClass;
 
 class QuestionController extends Controller
@@ -49,8 +50,12 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $questionId = 1;
-        return redirect()->route('question.show', $questionId);
+        $title   = $request->input('title');
+        $content = $request->input('content');
+        $userId  = Auth::id();
+        $result = $this->QuestionService->storeQuestion($title, $content, $userId);
+
+        return redirect()->route('question.show', $result->id);
     }
 
     /**
