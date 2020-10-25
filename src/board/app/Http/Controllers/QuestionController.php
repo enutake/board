@@ -64,7 +64,7 @@ class QuestionController extends Controller
         $data->question = $this->QuestionService->getQuestionDetail($id);
         $data->answers  = $this->AnswerService->getAnswerListForQuestionPage($id);
 
-        return view('question', ['data' => $data]);
+        return view('question.index', ['data' => $data]);
     }
 
     /**
