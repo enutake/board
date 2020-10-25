@@ -38,7 +38,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        return view('question.create');
     }
 
     /**
@@ -49,7 +49,8 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $questionId = 1;
+        return redirect()->route('question.show', $questionId);
     }
 
     /**
