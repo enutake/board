@@ -50,6 +50,7 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        //TODO: バリデーションを後で追加する
         $title   = $request->input('title');
         $content = $request->input('content');
         $userId  = Auth::id();
