@@ -27,7 +27,7 @@ class AnswerService
      */
     public function storeAnswer($content, $userId, $questionId)
     {
-        DB::transaction(function () use ($content, $userId, $questionId){            
+        DB::transaction(function () use ($content, $userId, $questionId) {
             Answer::create(
                 [
                     'content'     => $content,
@@ -37,5 +37,4 @@ class AnswerService
             );
         });
     }
-
 }
