@@ -44,4 +44,31 @@ class QuestionRepositoryTest extends TestCase
 
         $this->assertNotEquals(100000000, count($actual));
     }
+
+    /**
+     * @test
+     */
+    public function getQuestionDetailByIdの正常系テスト()
+    {
+        $QuestionRepository = app(QuestionRepository::class);
+        $actual = $QuestionRepository->getQuestionDetailById(1);
+
+        $this->assertEquals(1, $actual->id);
+    }
+
+    /**
+     * @test
+     */
+    public function storeQuestionの正常系テスト()
+    {
+        $QuestionRepository = app(QuestionRepository::class);
+        $QuestionRepository->storeQuestion('titletitle', 'contentcontent', 1);
+
+        $this->assertDatabaseHas('questions', [
+            'id'      => 2,
+            'title'   => 'titletitle',
+            'content' => 'contentcontent',
+            'user_id' => 1,
+        ]);
+    }
 }
