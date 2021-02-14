@@ -3,18 +3,23 @@
 namespace App\Services;
 
 use App\Models\Question;
+use App\Repositories\QuestionRepository;
 use Illuminate\Support\Facades\DB;
 
 class QuestionService
 {
+    public function __construct(QuestionRepository $QuestionRepository)
+    {
+        $this->QuestionRepository = $QuestionRepository;
+    }
+    
     /**
      * トップページの質問一覧を取得する
      */
     public function getQuestionListForTop()
     {
         $toppageQuestionCount = config('page.toppage.questions.count', 10);
-        $questionList = Question::take($toppageQuestionCount)->get();
-        return $questionList;
+        return $this->QuestionRepository->getQuestionList($toppageQuestionCount);
     }
 
     /**
@@ -31,7 +36,7 @@ class QuestionService
      */
     public function storeQuestion($title, $content, $userId)
     {
-        return DB::transaction(function () use ($title, $content, $userId){            
+        return DB::transaction(function () use ($title, $content, $userId) {
             $result = Question::create(
                 [
                     'title'       => $title,
