@@ -19,7 +19,7 @@ jobs:
     - name: cd
       run: cd src/board
     - name: Copy .env
-      run: php -r "file_exists('src/board/.env') || copy('.env.example', '.env');"
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Generate key
