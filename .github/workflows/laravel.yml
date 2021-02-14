@@ -21,11 +21,11 @@ jobs:
         path: ${{ github.workspace }}
         working-directory: ./src/board
     - name: Generate key
-        run: php artisan key:generate
-        working-directory: ./src/board
+      run: php artisan key:generate
+      working-directory: ./src/board
     - name: Directory Permissions
-        run: chmod -R 777 storage bootstrap/cache
-        working-directory: ./src/board
+      run: chmod -R 777 storage bootstrap/cache
+      working-directory: ./src/board
     - name: Create Database
       run: |
         cd src/board 
