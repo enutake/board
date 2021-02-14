@@ -25,16 +25,8 @@ class AnswerService
     /**
      * 回答投稿データを保存する
      */
-    public function storeAnswer($content, $userId, $questionId)
+    public function storeAnswer($content, $userId, $questionId): void
     {
-        DB::transaction(function () use ($content, $userId, $questionId) {
-            Answer::create(
-                [
-                    'content'     => $content,
-                    'user_id'     => $userId,
-                    'question_id' => $questionId,
-                ],
-            );
-        });
+        $this->AnswerRepository->storeAnswer($content, $userId, $questionId);
     }
 }
