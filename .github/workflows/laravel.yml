@@ -19,10 +19,13 @@ jobs:
         entrypoint: /usr/bin/composer
         args: install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
         path: ${{ github.workspace }}
+        working-directory: ./src/board
     - name: Generate key
-      run: cd src/board && php artisan key:generate
+        run: php artisan key:generate
+        working-directory: ./src/board
     - name: Directory Permissions
-      run: cd src/board && chmod -R 777 storage bootstrap/cache
+        run: chmod -R 777 storage bootstrap/cache
+        working-directory: ./src/board
     - name: Create Database
       run: |
         cd src/board 
