@@ -12,7 +12,7 @@ class QuestionService
     {
         $this->QuestionRepository = $QuestionRepository;
     }
-
+    
     /**
      * トップページの質問一覧を取得する
      */
@@ -25,7 +25,7 @@ class QuestionService
     /**
      * 質問詳細を取得する
      */
-    public function getQuestionDetailById($questionId)
+    public function getQuestionDetail($questionId)
     {
         $questionDetail = Question::find($questionId);
         return $questionDetail;

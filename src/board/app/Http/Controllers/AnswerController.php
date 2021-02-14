@@ -50,7 +50,7 @@ class AnswerController extends Controller
         );
 
         $data = new stdClass;
-        $data->question = $this->QuestionService->getQuestionDetailById($questionId);
+        $data->question = $this->QuestionService->getQuestionDetail($questionId);
         return view('answer', ['data' => $data]);
     }
 
