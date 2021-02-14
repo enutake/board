@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Question;
 use App\Repositories\QuestionRepository;
-use Illuminate\Support\Facades\DB;
 
 class QuestionService
 {
@@ -35,15 +33,6 @@ class QuestionService
      */
     public function storeQuestion($title, $content, $userId)
     {
-        return DB::transaction(function () use ($title, $content, $userId) {
-            $result = Question::create(
-                [
-                    'title'       => $title,
-                    'content'     => $content,
-                    'user_id'     => $userId,
-                ],
-            );
-            return $result;
-        });
+        return $this->QuestionRepository->storeQuestion($title, $content, $userId);
     }
 }
