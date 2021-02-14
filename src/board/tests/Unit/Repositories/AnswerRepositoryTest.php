@@ -13,21 +13,23 @@ class AnswerRepositoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    // public function setUp(): void
-    // {
-    //     factory(User::class)->create();
-    //     factory(Question::class)->create();
-    //     factory(Answer::class)->create();
-    // }
+    public function setUp(): void
+    {
+        parent::setUp();
+        factory(User::class)->create([
+            'id' => 1,
+        ]);
+        factory(Question::class)->create([
+            'id' => 1,
+        ]);
+        factory(Answer::class)->create();
+    }
 
     /**
      * @test
      */
     public function storeAnswerでDBの保存ができること()
     {
-        factory(User::class)->create();
-        factory(Question::class)->create();
-
         $AnswerRepository = app(AnswerRepository::class);
         $AnswerRepository->storeAnswer("aaa", 1, 1);
 
@@ -38,18 +40,14 @@ class AnswerRepositoryTest extends TestCase
         ]);
     }
 
-    // /**
-    //  * @test
-    //  */
-    // public function getAnswerListByQuestionで特定の質問に紐づく回答一覧を取得すること()
-    // {
-    //     factory(User::class)->create();
-    //     factory(Question::class)->create();
-    //     factory(Answer::class)->create();
+    /**
+     * @test
+     */
+    public function getAnswerListByQuestionで特定の質問に紐づく回答一覧を取得すること()
+    {
+        $AnswerRepository = app(AnswerRepository::class);
+        $actual = $AnswerRepository->getAnswerListByQuestion(1);
 
-    //     $AnswerRepository = app(AnswerRepository::class);
-    //     $actual = $AnswerRepository->getAnswerListByQuestion(1);
-
-    //     $this->assertEquals(1, $actual->all()[0]->question_id);
-    // }
+        $this->assertEquals(1, $actual->all()[0]->question_id);
+    }
 }
