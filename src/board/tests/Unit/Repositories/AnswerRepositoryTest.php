@@ -17,12 +17,14 @@ class AnswerRepositoryTest extends TestCase
     {
         parent::setUp();
         factory(User::class)->create([
-            'id' => 1,
+            'id' => 1, //incrementのリセットはされないので作成時は指定する
         ]);
         factory(Question::class)->create([
-            'id' => 1,
+            'id' => 1, //incrementのリセットはされないので作成時は指定する
         ]);
-        factory(Answer::class)->create();
+        factory(Answer::class)->create([
+            'id' => 1, //incrementのリセットはされないので作成時は指定する
+        ]);
     }
 
     /**
