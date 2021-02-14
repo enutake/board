@@ -27,8 +27,7 @@ class QuestionService
      */
     public function getQuestionDetail($questionId)
     {
-        $questionDetail = Question::find($questionId);
-        return $questionDetail;
+        return $this->QuestionRepository->getQuestionDetailById($questionId);
     }
 
     /**
