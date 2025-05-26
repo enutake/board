@@ -171,7 +171,7 @@ class AnswerServiceTest extends TestCase
     {
         $content = 'テスト回答';
         $userId = 789;
-        $questionId = 012;
+        $questionId = 12;
         
         $this->answerRepositoryMock
             ->shouldReceive('storeAnswer')
