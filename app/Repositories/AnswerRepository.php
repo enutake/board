@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\DB;
 
 class AnswerRepository
 {
-    public function getAnswerListByQuestion($questionId)
+    public function getAnswerListByQuestion(int $questionId): \Illuminate\Support\Collection
     {
         return Answer::where('question_id', $questionId)->get();
     }
 
-    public function storeAnswer($content, $userId, $questionId)
+    public function storeAnswer(string $content, int $userId, int $questionId): void
     {
         DB::transaction(function () use ($content, $userId, $questionId) {
             Answer::create(

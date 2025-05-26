@@ -18,7 +18,7 @@ class AnswerController extends Controller
      *
      * @return void
      */
-    public function __construct(QuestionService $QuestionService, AnswerService $AnswerService)
+    public function __construct(QuestionService $QuestionService, AnswerService $AnswerService): void
     {
         $this->QuestionService = $QuestionService;
         $this->AnswerService   = $AnswerService;
@@ -29,7 +29,7 @@ class AnswerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): \Illuminate\Http\Response
     {
         //
     }
@@ -39,7 +39,7 @@ class AnswerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $questionId)
+    public function create(Request $request, int $questionId): \Illuminate\View\View
     {
         $userId = Auth::id();
         session(
@@ -60,7 +60,7 @@ class AnswerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AnswerRequest $request)
+    public function store(AnswerRequest $request): \Illuminate\Http\RedirectResponse
     {
         $request->session()->regenerate();
 
@@ -77,7 +77,7 @@ class AnswerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): \Illuminate\Http\Response
     {
         //
     }
@@ -88,7 +88,7 @@ class AnswerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): \Illuminate\Http\Response
     {
         //
     }
@@ -100,7 +100,7 @@ class AnswerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): \Illuminate\Http\Response
     {
         //
     }
@@ -111,7 +111,7 @@ class AnswerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): \Illuminate\Http\Response
     {
         //
     }

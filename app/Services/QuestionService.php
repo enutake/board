@@ -6,7 +6,7 @@ use App\Repositories\QuestionRepository;
 
 class QuestionService
 {
-    public function __construct(QuestionRepository $QuestionRepository)
+    public function __construct(QuestionRepository $QuestionRepository): void
     {
         $this->QuestionRepository = $QuestionRepository;
     }
@@ -14,7 +14,7 @@ class QuestionService
     /**
      * トップページの質問一覧を取得する
      */
-    public function getQuestionListForTop()
+    public function getQuestionListForTop(): \Illuminate\Support\Collection
     {
         $toppageQuestionCount = config('page.toppage.questions.count', 10);
         return $this->QuestionRepository->getQuestionList($toppageQuestionCount);
@@ -23,7 +23,7 @@ class QuestionService
     /**
      * 質問詳細を取得する
      */
-    public function getQuestionDetail($questionId)
+    public function getQuestionDetail(int $questionId): ?\App\Models\Question
     {
         return $this->QuestionRepository->getQuestionDetailById($questionId);
     }
@@ -31,7 +31,7 @@ class QuestionService
     /**
      * 質問投稿データを保存する
      */
-    public function storeQuestion($title, $content, $userId)
+    public function storeQuestion(string $title, string $content, int $userId): \App\Models\Question
     {
         return $this->QuestionRepository->storeQuestion($title, $content, $userId);
     }

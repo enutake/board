@@ -20,17 +20,17 @@ class Answer extends Model
         'deleted_at',
     ];
 
-    public function users()
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
-    public function questions()
+    public function questions(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('App\Models\Question', 'question_id', 'id');
     }
 
-    public function tagMasters()
+    public function tagMasters(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany('App\Models\TagMaster', 'tag_masters', 'id', 'id');
     }

@@ -17,12 +17,12 @@ class TagMaster extends Model
         'updated_at',
     ];
     
-    public function questions()
+    public function questions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany('App\Models\Question', 'questions', 'id', 'id');
     }
     
-    public function answers()
+    public function answers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany('App\Models\Answer', 'answers', 'id', 'id');
     }
