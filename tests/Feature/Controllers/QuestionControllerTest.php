@@ -90,7 +90,7 @@ class QuestionControllerTest extends FeatureTestCase
         ]);
 
         $response->assertStatus(302);
-        $this->assertStringContains('/questions/', $response->headers->get('location'));
+        $this->assertStringContainsString('/questions/', $response->headers->get('location'));
     }
 
     public function testStoreHandlesEmptyData()
