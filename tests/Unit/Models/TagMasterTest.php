@@ -51,7 +51,7 @@ class TagMasterTest extends TestCase
     /**
      * @test
      */
-    public function TagMasterモデルでmass assignmentが正常に動作すること()
+    public function TagMasterモデルでmass_assignmentが正常に動作すること()
     {
         $data = [
             'name' => 'マスアサインメントテストタグ',

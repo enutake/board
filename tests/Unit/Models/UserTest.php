@@ -78,7 +78,7 @@ class UserTest extends TestCase
     /**
      * @test
      */
-    public function Userモデルでmass assignmentが正常に動作すること()
+    public function Userモデルでmass_assignmentが正常に動作すること()
     {
         $data = [
             'name' => 'マスアサインメントテストユーザー',

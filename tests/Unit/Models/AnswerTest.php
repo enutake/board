@@ -63,7 +63,7 @@ class AnswerTest extends TestCase
     /**
      * @test
      */
-    public function Answerモデルでmass assignmentが正常に動作すること()
+    public function Answerモデルでmass_assignmentが正常に動作すること()
     {
         $data = [
             'content' => 'マスアサインメントテスト',
