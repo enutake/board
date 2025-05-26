@@ -5,6 +5,65 @@ https://boardboard.tokyo
 ## 概要
 Laravelで作成したシンプルなQ&Aアプリ
 
+## ローカル開発環境セットアップ
+
+### 必要な環境
+- Docker
+- Docker Compose
+
+### セットアップ手順
+
+1. リポジトリをクローン
+```bash
+git clone https://github.com/enutake/board.git
+cd board
+```
+
+2. 環境変数ファイルを作成
+```bash
+cp .env.example .env
+```
+
+3. Dockerコンテナを起動
+```bash
+docker-compose up -d
+```
+
+4. 依存関係をインストール
+```bash
+docker-compose exec web composer install
+```
+
+5. アプリケーションキーを生成
+```bash
+docker-compose exec web php artisan key:generate
+```
+
+6. データベースマイグレーション
+```bash
+docker-compose exec web php artisan migrate
+```
+
+### アクセス情報
+- **アプリケーション**: http://localhost:8080
+- **HTTPS**: https://localhost:8443
+- **データベース**: localhost:3307（ユーザー: root, パスワード: 環境変数で設定）
+
+### よく使うコマンド
+```bash
+# コンテナの起動
+docker-compose up -d
+
+# コンテナの停止
+docker-compose down
+
+# ログの確認
+docker-compose logs
+
+# Webコンテナのシェルに入る
+docker-compose exec web bash
+```
+
 ## 設計
 下記のグーグルドライブ内に超最低限の資料が格納されています。
 https://drive.google.com/drive/folders/1E0qM00mzwVwDz93Uc23M2PQgc0QoxGOr
