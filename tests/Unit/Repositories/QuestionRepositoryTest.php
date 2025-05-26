@@ -43,11 +43,9 @@ class QuestionRepositoryTest extends TestCase
     public function getQuestionListで指定した件数分の質問を取得できること()
     {
         // 複数の質問を作成
-        $this->createQuestions([
-            ['user_id' => $this->user->id],
-            ['user_id' => $this->user->id],
-            ['user_id' => $this->user->id],
-        ]);
+        $this->createQuestion(['user_id' => $this->user->id]);
+        $this->createQuestion(['user_id' => $this->user->id]);
+        $this->createQuestion(['user_id' => $this->user->id]);
         
         $actual = $this->questionRepository->getQuestionList(2);
         
@@ -175,7 +173,8 @@ class QuestionRepositoryTest extends TestCase
      */
     public function storeQuestionで長いタイトルとコンテンツでも保存できること()
     {
-        $title = str_repeat('あ', 500);
+        // titleはstring型なので255文字まで、contentはtext型なので長文OK
+        $title = str_repeat('あ', 85); // 日本語は3バイトなので85文字まで
         $content = str_repeat('い', 2000);
         
         $result = $this->questionRepository->storeQuestion($title, $content, $this->user->id);

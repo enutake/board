@@ -131,10 +131,8 @@ class AnswerRepositoryTest extends TestCase
     public function getAnswerListByQuestionで複数の回答がある場合全て取得できること()
     {
         // 追加の回答を作成
-        $this->createAnswers([
-            ['user_id' => $this->user->id, 'question_id' => $this->question->id],
-            ['user_id' => $this->user->id, 'question_id' => $this->question->id],
-        ]);
+        $this->createAnswer(['user_id' => $this->user->id, 'question_id' => $this->question->id]);
+        $this->createAnswer(['user_id' => $this->user->id, 'question_id' => $this->question->id]);
         
         $actual = $this->answerRepository->getAnswerListByQuestion($this->question->id);
         

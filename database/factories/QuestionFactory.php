@@ -15,14 +15,14 @@ $factory->define(Question::class, function (Faker $faker) {
     ];
 });
 
-$factory->state(Question::class, 'short', [
-    'content' => function (Faker $faker) {
-        return $faker->sentence;
-    },
-]);
+$factory->state(Question::class, 'short', function (Faker $faker) {
+    return [
+        'content' => $faker->sentence,
+    ];
+});
 
-$factory->state(Question::class, 'long', [
-    'content' => function (Faker $faker) {
-        return $faker->text(1000);
-    },
-]);
+$factory->state(Question::class, 'long', function (Faker $faker) {
+    return [
+        'content' => $faker->text(1000),
+    ];
+});

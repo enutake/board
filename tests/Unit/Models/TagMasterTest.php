@@ -143,7 +143,8 @@ class TagMasterTest extends TestCase
      */
     public function TagMasterモデルで長いnameでも作成できること()
     {
-        $longName = str_repeat('あ', 500);
+        // MySQLのstring型のデフォルトは255文字まで
+        $longName = str_repeat('あ', 85); // 日本語は3バイトなので85文字まで
         $tagMaster = TagMaster::create(['name' => $longName]);
         
         $this->assertInstanceOf(TagMaster::class, $tagMaster);
