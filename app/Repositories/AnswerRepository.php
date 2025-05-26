@@ -9,7 +9,7 @@ class AnswerRepository
 {
     public function getAnswerListByQuestion($questionId)
     {
-        return Answer::where('question_id', $questionId)->get();
+        return Answer::where('question_id', $questionId)->with('likes')->get();
     }
 
     public function storeAnswer($content, $userId, $questionId)

@@ -22,3 +22,5 @@ Route::get('/questions/{question}', 'QuestionController@show')->name('question.s
 Route::get('/questions/{question}/answers/new', 'AnswerController@create')->middleware('auth')->name('answer.create');
 Route::post('/answers', 'AnswerController@store')->middleware('auth')->name('answer.store');
 Route::post('/questions', 'QuestionController@store')->middleware('auth')->name('question.store');
+Route::post('/answers/{answer}/like', 'AnswerController@like')->middleware('auth')->name('answer.like');
+Route::delete('/answers/{answer}/like', 'AnswerController@unlike')->middleware('auth')->name('answer.unlike');

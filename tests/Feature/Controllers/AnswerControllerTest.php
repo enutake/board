@@ -139,4 +139,78 @@ class AnswerControllerTest extends FeatureTestCase
 
         $response->assertSessionMissing('questionId');
     }
+
+    public function testLikeRequiresAuthentication()
+    {
+        $answer = $this->createAnswer();
+
+        $response = $this->post("/answers/{$answer->id}/like");
+
+        $response->assertRedirect('/login');
+    }
+
+    public function testLikeAnswer()
+    {
+        $answer = $this->createAnswer();
+        $user = $this->actingAsUser();
+
+        $response = $this->post("/answers/{$answer->id}/like");
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'liked' => true,
+            'likes_count' => 1
+        ]);
+
+        $this->assertDatabaseHas('answer_likes', [
+            'user_id' => $user->id,
+            'answer_id' => $answer->id
+        ]);
+    }
+
+    public function testUnlikeAnswer()
+    {
+        $answer = $this->createAnswer();
+        $user = $this->actingAsUser();
+
+        $answer->likes()->attach($user->id);
+
+        $response = $this->delete("/answers/{$answer->id}/like");
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'liked' => false,
+            'likes_count' => 0
+        ]);
+
+        $this->assertDatabaseMissing('answer_likes', [
+            'user_id' => $user->id,
+            'answer_id' => $answer->id
+        ]);
+    }
+
+    public function testCannotLikeSameAnswerTwice()
+    {
+        $answer = $this->createAnswer();
+        $user = $this->actingAsUser();
+
+        $this->post("/answers/{$answer->id}/like");
+        $this->post("/answers/{$answer->id}/like");
+
+        $this->assertEquals(1, $answer->likesCount());
+        $this->assertDatabaseMissing('answer_likes', [
+            'user_id' => $user->id,
+            'answer_id' => $answer->id,
+            'id' => 2
+        ]);
+    }
+
+    public function testUnlikeRequiresAuthentication()
+    {
+        $answer = $this->createAnswer();
+
+        $response = $this->delete("/answers/{$answer->id}/like");
+
+        $response->assertRedirect('/login');
+    }
 }

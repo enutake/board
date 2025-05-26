@@ -34,4 +34,22 @@ class Answer extends Model
     {
         return $this->belongsToMany('App\Models\TagMaster', 'tag_masters', 'id', 'id');
     }
+
+    public function likes()
+    {
+        return $this->belongsToMany('App\Models\User', 'answer_likes', 'answer_id', 'user_id')->withTimestamps();
+    }
+
+    public function likesCount()
+    {
+        return $this->likes()->count();
+    }
+
+    public function isLikedBy($user)
+    {
+        if (!$user) {
+            return false;
+        }
+        return $this->likes()->where('user_id', $user->id)->exists();
+    }
 }

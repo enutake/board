@@ -115,4 +115,46 @@ class AnswerController extends Controller
     {
         //
     }
+
+    /**
+     * Like an answer.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function like($id)
+    {
+        $user = Auth::user();
+        $answer = Answer::findOrFail($id);
+
+        if (!$answer->isLikedBy($user)) {
+            $answer->likes()->attach($user->id);
+        }
+
+        return response()->json([
+            'liked' => true,
+            'likes_count' => $answer->likesCount()
+        ]);
+    }
+
+    /**
+     * Unlike an answer.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function unlike($id)
+    {
+        $user = Auth::user();
+        $answer = Answer::findOrFail($id);
+
+        if ($answer->isLikedBy($user)) {
+            $answer->likes()->detach($user->id);
+        }
+
+        return response()->json([
+            'liked' => false,
+            'likes_count' => $answer->likesCount()
+        ]);
+    }
 }

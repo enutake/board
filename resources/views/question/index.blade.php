@@ -22,7 +22,23 @@
                     <div class="card-text mb-3">
                         {{ $answer->content }}
                     </div>
-                    <div class="card-user text-right small">{{ $answer->users->name }}さん</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="card-user small">{{ $answer->users->name }}さん</div>
+                        <div class="like-section">
+                            @auth
+                                <button class="btn btn-sm like-btn {{ $answer->isLikedBy(auth()->user()) ? 'btn-danger' : 'btn-outline-danger' }}" 
+                                        data-answer-id="{{ $answer->id }}" 
+                                        data-liked="{{ $answer->isLikedBy(auth()->user()) ? 'true' : 'false' }}">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            @else
+                                <span class="btn btn-sm btn-outline-secondary disabled">
+                                    <i class="fas fa-heart"></i>
+                                </span>
+                            @endauth
+                            <span class="likes-count ml-1">{{ $answer->likesCount() }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             @endforeach
@@ -30,3 +46,49 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const likeButtons = document.querySelectorAll('.like-btn');
+    
+    likeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const answerId = this.dataset.answerId;
+            const isLiked = this.dataset.liked === 'true';
+            const likesCountElement = this.parentElement.querySelector('.likes-count');
+            
+            const url = isLiked 
+                ? `/answers/${answerId}/like`
+                : `/answers/${answerId}/like`;
+            
+            const method = isLiked ? 'DELETE' : 'POST';
+            
+            fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.liked) {
+                    this.classList.remove('btn-outline-danger');
+                    this.classList.add('btn-danger');
+                    this.dataset.liked = 'true';
+                } else {
+                    this.classList.remove('btn-danger');
+                    this.classList.add('btn-outline-danger');
+                    this.dataset.liked = 'false';
+                }
+                likesCountElement.textContent = data.likes_count;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+});
+</script>
+@endpush
