@@ -76,11 +76,6 @@ class CompleteWorkflowTest extends FeatureTestCase
     public function testGuestUserBrowsingWorkflow()
     {
         $questions = $this->createQuestions(3);
-        $questionsWithAnswers = [];
-        
-        foreach ($questions as $question) {
-            $questionsWithAnswers[] = $this->createQuestionWithAnswers(['id' => $question->id], 2);
-        }
 
         $response = $this->get('/');
         $response->assertStatus(200);
