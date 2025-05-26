@@ -11,6 +11,9 @@ use stdClass;
 
 class QuestionController extends Controller
 {
+    private QuestionService $QuestionService;
+    private AnswerService $AnswerService;
+
     /**
      * Create a new controller instance.
      *
@@ -27,7 +30,7 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(): \Illuminate\Http\Response
+    public function index(): void
     {
         //
     }
@@ -80,7 +83,7 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(int $id): \Illuminate\Http\Response
+    public function edit(int $id): void
     {
         //
     }
@@ -92,7 +95,7 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, int $id): \Illuminate\Http\Response
+    public function update(Request $request, int $id): void
     {
         //
     }
@@ -103,7 +106,7 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id): \Illuminate\Http\Response
+    public function destroy(int $id): void
     {
         //
     }

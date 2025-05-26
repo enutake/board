@@ -6,6 +6,8 @@ use App\Repositories\QuestionRepository;
 
 class QuestionService
 {
+    private QuestionRepository $QuestionRepository;
+
     public function __construct(QuestionRepository $QuestionRepository): void
     {
         $this->QuestionRepository = $QuestionRepository;

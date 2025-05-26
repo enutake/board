@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class AnswerService
 {
+    private AnswerRepository $AnswerRepository;
+
     public function __construct(AnswerRepository $AnswerRepository): void
     {
         $this->AnswerRepository = $AnswerRepository;
