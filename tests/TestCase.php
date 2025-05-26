@@ -13,7 +13,7 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
         
         // Ensure we're using the test database
-        config(['database.default' => 'mysql_testing']);
+        
         
         // Clear any cached config
         $this->app['config']->set('database.default', 'mysql_testing');
