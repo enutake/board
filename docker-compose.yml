@@ -8,8 +8,8 @@ services:
       - ./docker/web/root:/root
       - ./docker/web/workspace:/workspace
     ports:
-      - 80:80
-      - 443:443
+      - 8080:80
+      - 8443:443
     tty: true
   db:
     build: ./docker/db/
@@ -20,5 +20,5 @@ services:
       - ./docker/db/root:/root
       - ./docker/db/workspace:/workspace
     ports:
-      - 43306:3306
+      - 3307:3306
     tty: true
