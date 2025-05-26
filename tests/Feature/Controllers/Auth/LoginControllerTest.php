@@ -26,7 +26,7 @@ class LoginControllerTest extends FeatureTestCase
             'password' => 'password123'
         ]);
 
-        $response->assertRedirect('/home');
+        $response->assertRedirect('/');
         $this->assertAuthenticatedAs($user);
     }
 
