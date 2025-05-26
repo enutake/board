@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM --platform=linux/amd64 php:7.4-apache
 
 # Composerのインストール
 RUN cd /usr/bin && curl -s http://getcomposer.org/installer | php && ln -s /usr/bin/composer.phar /usr/bin/composer

@@ -17,14 +17,14 @@ $factory->define(Answer::class, function (Faker $faker) {
     ];
 });
 
-$factory->state(Answer::class, 'short', [
-    'content' => function (Faker $faker) {
-        return $faker->sentence;
-    },
-]);
+$factory->state(Answer::class, 'short', function (Faker $faker) {
+    return [
+        'content' => $faker->sentence,
+    ];
+});
 
-$factory->state(Answer::class, 'detailed', [
-    'content' => function (Faker $faker) {
-        return $faker->text(800);
-    },
-]);
+$factory->state(Answer::class, 'detailed', function (Faker $faker) {
+    return [
+        'content' => $faker->text(800),
+    ];
+});

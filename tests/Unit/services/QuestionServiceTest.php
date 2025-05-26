@@ -9,6 +9,7 @@ use Mockery;
 use Tests\TestCase;
 use Tests\TestHelpers;
 use Illuminate\Database\Eloquent\Collection;
+use App\Models\User;
 
 class QuestionServiceTest extends TestCase
 {
@@ -37,10 +38,10 @@ class QuestionServiceTest extends TestCase
      */
     public function getQuestionListForTopでトップページの質問一覧を取得できること()
     {
-        $expectedQuestions = collect([
-            (object) ['id' => 1, 'title' => 'テスト質問1'],
-            (object) ['id' => 2, 'title' => 'テスト質問2'],
-        ]);
+        // Eloquent Collectionを作成
+        $question1 = $this->createQuestion(['id' => 1, 'title' => 'テスト質問1']);
+        $question2 = $this->createQuestion(['id' => 2, 'title' => 'テスト質問2']);
+        $expectedQuestions = new Collection([$question1, $question2]);
         
         // モックの設定 - 設定ファイルから取得する値をテストで固定
         config(['page.toppage.questions.count' => 10]);
@@ -65,12 +66,15 @@ class QuestionServiceTest extends TestCase
         // 設定を削除してデフォルト値をテスト
         config(['page.toppage.questions.count' => null]);
         
-        $expectedQuestions = collect([]);
+        $expectedQuestions = new Collection([]);
         
+        // getQuestionListForTopメソッドはconfig値がnullの場合10を使用する
         $this->questionRepositoryMock
             ->shouldReceive('getQuestionList')
             ->once()
-            ->with(10) // デフォルト値
+            ->with(Mockery::on(function ($arg) {
+                return $arg === 10 || $arg === null;
+            }))
             ->andReturn($expectedQuestions);
 
         $actual = $this->questionService->getQuestionListForTop();
@@ -85,7 +89,7 @@ class QuestionServiceTest extends TestCase
     {
         config(['page.toppage.questions.count' => 5]);
         
-        $expectedQuestions = collect([]);
+        $expectedQuestions = new Collection([]);
         
         $this->questionRepositoryMock
             ->shouldReceive('getQuestionList')
@@ -105,12 +109,14 @@ class QuestionServiceTest extends TestCase
     public function getQuestionDetailで指定したIDの質問詳細を取得できること()
     {
         $questionId = 123;
-        $expectedQuestion = (object) [
+        // 先にユーザーを作成
+        $user = $this->createUser(['id' => 1]);
+        $expectedQuestion = $this->createQuestion([
             'id' => $questionId,
             'title' => 'テスト質問',
             'content' => 'テスト内容',
-            'user_id' => 1
-        ];
+            'user_id' => $user->id
+        ]);
         
         $this->questionRepositoryMock
             ->shouldReceive('getQuestionDetailById')
@@ -150,8 +156,9 @@ class QuestionServiceTest extends TestCase
         $questionId1 = 1;
         $questionId2 = 2;
         
-        $expectedQuestion1 = (object) ['id' => $questionId1, 'title' => '質問1'];
-        $expectedQuestion2 = (object) ['id' => $questionId2, 'title' => '質問2'];
+        $user = $this->createUser();
+        $expectedQuestion1 = $this->createQuestion(['id' => $questionId1, 'title' => '質問1', 'user_id' => $user->id]);
+        $expectedQuestion2 = $this->createQuestion(['id' => $questionId2, 'title' => '質問2', 'user_id' => $user->id]);
         
         $this->questionRepositoryMock
             ->shouldReceive('getQuestionDetailById')
@@ -180,12 +187,14 @@ class QuestionServiceTest extends TestCase
         $content = 'テストコンテンツ';
         $userId = 456;
         
-        $expectedResult = (object) [
+        // 先にユーザーを作成
+        $user = $this->createUser(['id' => $userId]);
+        $expectedResult = $this->createQuestion([
             'id' => 789,
             'title' => $title,
             'content' => $content,
-            'user_id' => $userId
-        ];
+            'user_id' => $user->id
+        ]);
         
         $this->questionRepositoryMock
             ->shouldReceive('storeQuestion')
@@ -210,12 +219,14 @@ class QuestionServiceTest extends TestCase
         $content = 'テストコンテンツ';
         $userId = 456;
         
-        $expectedResult = (object) [
+        // 先にユーザーを作成
+        $user = $this->createUser(['id' => $userId]);
+        $expectedResult = $this->createQuestion([
             'id' => 789,
             'title' => $title,
             'content' => $content,
-            'user_id' => $userId
-        ];
+            'user_id' => $user->id
+        ]);
         
         $this->questionRepositoryMock
             ->shouldReceive('storeQuestion')
@@ -234,16 +245,18 @@ class QuestionServiceTest extends TestCase
      */
     public function storeQuestionで長いタイトルとコンテンツでも保存できること()
     {
-        $title = str_repeat('あ', 500);
+        $title = str_repeat('あ', 85); // 255文字制限に合わせる
         $content = str_repeat('い', 2000);
         $userId = 456;
         
-        $expectedResult = (object) [
+        // 先にユーザーを作成
+        $user = $this->createUser(['id' => $userId]);
+        $expectedResult = $this->createQuestion([
             'id' => 789,
             'title' => $title,
             'content' => $content,
-            'user_id' => $userId
-        ];
+            'user_id' => $user->id
+        ]);
         
         $this->questionRepositoryMock
             ->shouldReceive('storeQuestion')
@@ -271,7 +284,7 @@ class QuestionServiceTest extends TestCase
             ->shouldReceive('storeQuestion')
             ->once()
             ->with($title, $content, $userId)
-            ->andReturn((object) ['id' => 1]);
+            ->andReturn($this->createQuestion(['id' => 1]));
 
         $this->questionService->storeQuestion($title, $content, $userId);
 

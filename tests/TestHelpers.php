@@ -5,6 +5,7 @@ namespace Tests;
 use App\Models\User;
 use App\Models\Question;
 use App\Models\Answer;
+use App\Models\TagMaster;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 
@@ -40,6 +41,11 @@ trait TestHelpers
     protected function createAnswers($count = 3, $attributes = [])
     {
         return factory(Answer::class, $count)->create($attributes);
+    }
+
+    protected function createTagMaster($attributes = [])
+    {
+        return factory(TagMaster::class)->create($attributes);
     }
 
     protected function createQuestionWithAnswers($questionAttributes = [], $answerCount = 2)

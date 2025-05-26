@@ -27,11 +27,15 @@ $factory->define(User::class, function (Faker $faker) {
     ];
 });
 
-$factory->state(User::class, 'unverified', [
-    'email_verified_at' => null,
-]);
+$factory->state(User::class, 'unverified', function (Faker $faker) {
+    return [
+        'email_verified_at' => null,
+    ];
+});
 
-$factory->state(User::class, 'admin', [
-    'name' => 'Admin User',
-    'email' => 'admin@test.example.com',
-]);
+$factory->state(User::class, 'admin', function (Faker $faker) {
+    return [
+        'name' => 'Admin User',
+        'email' => 'admin@test.example.com',
+    ];
+});
