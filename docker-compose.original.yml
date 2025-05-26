@@ -1,0 +1,24 @@
+version: "3"
+services:
+  web:
+    build: ./docker/web/
+    hostname: web-server
+    volumes:
+      - ./:/var/www/html
+      - ./docker/web/root:/root
+      - ./docker/web/workspace:/workspace
+    ports:
+      - 80:80
+      - 443:443
+    tty: true
+  db:
+    build: ./docker/db/
+    hostname: db-server
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./docker/db/root:/root
+      - ./docker/db/workspace:/workspace
+    ports:
+      - 43306:3306
+    tty: true
