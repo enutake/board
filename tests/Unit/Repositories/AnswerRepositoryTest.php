@@ -6,24 +6,31 @@ use App\Models\Answer;
 use App\Models\Question;
 use App\Models\User;
 use App\Repositories\AnswerRepository;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Tests\TestHelpers;
 
 class AnswerRepositoryTest extends TestCase
 {
-    use RefreshDatabase;
+    use TestHelpers;
+
+    protected $answerRepository;
+    protected $user;
+    protected $question;
+    protected $answer;
 
     public function setUp(): void
     {
         parent::setUp();
-        factory(User::class)->create([
-            'id' => 1, //incrementのリセットはされないので作成時は指定する
-        ]);
-        factory(Question::class)->create([
-            'id' => 1, //incrementのリセットはされないので作成時は指定する
-        ]);
-        factory(Answer::class)->create([
-            'id' => 1, //incrementのリセットはされないので作成時は指定する
+        
+        $this->answerRepository = app(AnswerRepository::class);
+        
+        // Create test data using helpers
+        $this->user = $this->createUser(['id' => 1]);
+        $this->question = $this->createQuestion(['id' => 1, 'user_id' => $this->user->id]);
+        $this->answer = $this->createAnswer([
+            'id' => 1, 
+            'user_id' => $this->user->id, 
+            'question_id' => $this->question->id
         ]);
     }
 
@@ -32,13 +39,14 @@ class AnswerRepositoryTest extends TestCase
      */
     public function storeAnswerでDBの保存ができること()
     {
-        $AnswerRepository = app(AnswerRepository::class);
-        $AnswerRepository->storeAnswer("aaa", 1, 1);
+        $content = "テスト回答内容";
+        
+        $this->answerRepository->storeAnswer($content, $this->user->id, $this->question->id);
 
         $this->assertDatabaseHas('answers', [
-            'question_id' => 1,
-            'content'     => "aaa",
-            'user_id'     => 1,
+            'question_id' => $this->question->id,
+            'content'     => $content,
+            'user_id'     => $this->user->id,
         ]);
     }
 
@@ -47,9 +55,9 @@ class AnswerRepositoryTest extends TestCase
      */
     public function getAnswerListByQuestionで特定の質問に紐づく回答一覧を取得すること()
     {
-        $AnswerRepository = app(AnswerRepository::class);
-        $actual = $AnswerRepository->getAnswerListByQuestion(1);
+        $actual = $this->answerRepository->getAnswerListByQuestion($this->question->id);
 
-        $this->assertEquals(1, $actual->all()[0]->question_id);
+        $this->assertEquals($this->question->id, $actual->all()[0]->question_id);
+        $this->assertCount(1, $actual);
     }
 }
