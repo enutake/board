@@ -33,5 +33,5 @@ $factory->state(User::class, 'unverified', [
 
 $factory->state(User::class, 'admin', [
     'name' => 'Admin User',
-    'email' => 'admin@example.com',
+    'email' => 'admin@test.example.com',
 ]);
