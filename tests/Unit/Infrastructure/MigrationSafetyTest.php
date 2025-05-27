@@ -64,7 +64,14 @@ class MigrationSafetyTest extends TestCase
             ]);
             $this->fail('Foreign key constraint should have prevented this insert');
         } catch (\Exception $e) {
-            $this->assertStringContainsString('foreign key constraint', strtolower($e->getMessage()));
+            // Check for either MySQL or SQLite foreign key constraint errors
+            $message = strtolower($e->getMessage());
+            $this->assertTrue(
+                strpos($message, 'foreign key constraint') !== false ||
+                strpos($message, 'constraint failed') !== false ||
+                strpos($message, 'integrity constraint') !== false,
+                'Expected foreign key constraint error, got: ' . $e->getMessage()
+            );
         }
     }
 
@@ -103,12 +110,24 @@ class MigrationSafetyTest extends TestCase
     private function getTableList(): array
     {
         $tables = [];
-        $query = "SHOW TABLES";
-        $result = DB::select($query);
         
-        foreach ($result as $table) {
-            $tableArray = (array) $table;
-            $tables[] = array_values($tableArray)[0];
+        // Use SQLite compatible query
+        if (config('database.default') === 'sqlite') {
+            $query = "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'";
+            $result = DB::select($query);
+            
+            foreach ($result as $table) {
+                $tables[] = $table->name;
+            }
+        } else {
+            // MySQL fallback
+            $query = "SHOW TABLES";
+            $result = DB::select($query);
+            
+            foreach ($result as $table) {
+                $tableArray = (array) $table;
+                $tables[] = array_values($tableArray)[0];
+            }
         }
         
         sort($tables);

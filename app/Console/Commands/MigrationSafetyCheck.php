@@ -58,7 +58,8 @@ class MigrationSafetyCheck extends Command
         $this->info('📦 Creating database backup...');
         
         $timestamp = now()->format('Y_m_d_His');
-        $databaseName = config('database.connections.mysql.database');
+        $defaultConnection = config('database.default');
+        $databaseName = config("database.connections.{$defaultConnection}.database");
         $backupPath = storage_path("backups/migration_safety_backup_{$timestamp}.sql");
 
         if (!is_dir(dirname($backupPath))) {
@@ -182,7 +183,8 @@ class MigrationSafetyCheck extends Command
         }
 
         try {
-            $initialTableCount = count(Schema::getAllTables());
+            // Get table count using a more compatible method
+            $initialTableCount = $this->getTableCount();
             
             $this->line('   Running rollback test (1 step)...');
             $this->call('migrate:rollback', ['--step' => 1]);
@@ -190,7 +192,7 @@ class MigrationSafetyCheck extends Command
             $this->line('   Re-applying migration...');
             $this->call('migrate');
             
-            $finalTableCount = count(Schema::getAllTables());
+            $finalTableCount = $this->getTableCount();
             
             if ($initialTableCount === $finalTableCount) {
                 $this->info('   ✅ Rollback test passed - database structure preserved');
@@ -262,6 +264,19 @@ class MigrationSafetyCheck extends Command
             $this->info('💡 Safe migration mode is ENABLED - proceed with confidence');
         } else {
             $this->warn('⚠️  Safe migration mode is DISABLED - enable for maximum safety');
+        }
+    }
+
+    private function getTableCount(): int
+    {
+        $defaultConnection = config('database.default');
+        
+        if ($defaultConnection === 'sqlite') {
+            $result = DB::select("SELECT COUNT(*) as count FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'");
+            return $result[0]->count;
+        } else {
+            $result = DB::select("SELECT COUNT(*) as count FROM information_schema.tables WHERE table_schema = DATABASE()");
+            return $result[0]->count;
         }
     }
 }

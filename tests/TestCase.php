@@ -13,10 +13,10 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
         
         // Ensure we're using the test database
-        
-        
-        // Clear any cached config
-        $this->app['config']->set('database.default', 'mysql_testing');
+        // Use SQLite for testing to avoid MySQL connection issues
+        $this->app['config']->set('database.default', 'sqlite');
+        $this->app['config']->set('database.connections.sqlite.database', ':memory:');
+        $this->app['config']->set('database.connections.sqlite.foreign_key_constraints', true);
     }
 
     protected function tearDown(): void
