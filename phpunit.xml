@@ -19,16 +19,16 @@
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+    <coverage processUncoveredFiles="true">
+        <include>
             <directory suffix=".php">./app</directory>
-            <exclude>
-                <directory suffix=".php">./app/Console</directory>
-                <file>./app/Http/Middleware/TrustHosts.php</file>
-                <file>./app/Http/Middleware/TrustProxies.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
+        </include>
+        <exclude>
+            <directory suffix=".php">./app/Console</directory>
+            <file>./app/Http/Middleware/TrustHosts.php</file>
+            <file>./app/Http/Middleware/TrustProxies.php</file>
+        </exclude>
+    </coverage>
     <php>
         <ini name="error_reporting" value="E_ALL &amp; ~E_DEPRECATED &amp; ~E_STRICT" />
         <ini name="display_errors" value="1" />
