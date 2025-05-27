@@ -6,7 +6,7 @@ use Tests\FeatureTestCase;
 
 class CompleteWorkflowTest extends FeatureTestCase
 {
-    public function testCompleteQuestionAndAnswerWorkflow()
+    public function testCompleteQuestionAndAnswerWorkflow(): void
     {
         $questionAuthor = $this->createUser([
             'name' => 'Question Author',
@@ -73,7 +73,7 @@ class CompleteWorkflowTest extends FeatureTestCase
         $response->assertStatus(200);
     }
 
-    public function testGuestUserBrowsingWorkflow()
+    public function testGuestUserBrowsingWorkflow(): void
     {
         $questions = $this->createQuestions(3);
 
@@ -94,7 +94,7 @@ class CompleteWorkflowTest extends FeatureTestCase
         $response->assertRedirect('/login');
     }
 
-    public function testUserRegistrationToQuestionPostingWorkflow()
+    public function testUserRegistrationToQuestionPostingWorkflow(): void
     {
         $response = $this->get('/register');
         $response->assertStatus(200);
@@ -131,7 +131,7 @@ class CompleteWorkflowTest extends FeatureTestCase
         $response->assertStatus(200);
     }
 
-    public function testMultipleUsersInteractionWorkflow()
+    public function testMultipleUsersInteractionWorkflow(): void
     {
         $questioner = $this->createUser(['name' => 'Questioner', 'email' => 'q@example.com']);
         $answerer1 = $this->createUser(['name' => 'Answerer 1', 'email' => 'a1@example.com']);
@@ -171,9 +171,10 @@ class CompleteWorkflowTest extends FeatureTestCase
         $this->assertDatabaseHas('answers', ['user_id' => $answerer2->id, 'question_id' => $question->id]);
     }
 
-    public function testValidationErrorRecoveryWorkflow()
+    public function testValidationErrorRecoveryWorkflow(): void
     {
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
 
         $response = $this->post('/questions', [
             'title' => '',

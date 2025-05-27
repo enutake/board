@@ -11,6 +11,9 @@ use stdClass;
 
 class QuestionController extends Controller
 {
+    private QuestionService $QuestionService;
+    private AnswerService $AnswerService;
+
     /**
      * Create a new controller instance.
      *
@@ -27,7 +30,7 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): void
     {
         //
     }
@@ -37,7 +40,7 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): \Illuminate\Contracts\View\View
     {
         return view('question.create');
     }
@@ -48,12 +51,15 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         //TODO: バリデーションを後で追加する
         $title   = $request->input('title');
         $content = $request->input('content');
         $userId  = Auth::id();
+        if ($userId === null) {
+            abort(401, 'Unauthorized');
+        }
         $result = $this->QuestionService->storeQuestion($title, $content, $userId);
 
         return redirect()->route('question.show', $result->id);
@@ -65,7 +71,7 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id): \Illuminate\Contracts\View\View
     {
         $data = new stdClass;
         $data->question = $this->QuestionService->getQuestionDetail($id);
@@ -80,7 +86,7 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id): void
     {
         //
     }
@@ -92,7 +98,7 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): void
     {
         //
     }
@@ -103,7 +109,7 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): void
     {
         //
     }

@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Question extends Model
 {
@@ -20,18 +23,18 @@ class Question extends Model
         'deleted_at',
     ];
 
-    public function users()
+    public function users(): BelongsTo
     {
-        return $this->belongsTo('App\Models\User', 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function answers()
+    public function answers(): HasMany
     {
-        return $this->hasMany('App\Models\Answer');
+        return $this->hasMany(Answer::class);
     }
 
-    public function tagMasters()
+    public function tagMasters(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\TagMaster', 'tag_masters', 'id', 'id');
+        return $this->belongsToMany(TagMaster::class, 'tag_masters', 'id', 'id');
     }
 }

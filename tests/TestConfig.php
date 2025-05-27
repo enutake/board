@@ -29,7 +29,7 @@ class TestConfig
     /**
      * Get test user credentials
      */
-    public static function getTestUserCredentials()
+    public static function getTestUserCredentials(): array
     {
         return [
             'email' => 'test' . self::TEST_EMAIL_DOMAIN,
@@ -40,7 +40,7 @@ class TestConfig
     /**
      * Get admin user credentials
      */
-    public static function getAdminCredentials()
+    public static function getAdminCredentials(): array
     {
         return [
             'email' => 'admin' . self::TEST_EMAIL_DOMAIN,
@@ -51,7 +51,7 @@ class TestConfig
     /**
      * Get test environment settings
      */
-    public static function getTestEnvironment()
+    public static function getTestEnvironment(): array
     {
         return [
             'APP_ENV' => 'testing',
@@ -67,7 +67,7 @@ class TestConfig
     /**
      * Common assertions for response testing
      */
-    public static function getCommonAssertions()
+    public static function getCommonAssertions(): array
     {
         return [
             'success_status' => 200,

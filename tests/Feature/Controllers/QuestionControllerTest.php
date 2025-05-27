@@ -6,7 +6,7 @@ use Tests\FeatureTestCase;
 
 class QuestionControllerTest extends FeatureTestCase
 {
-    public function testShowDisplaysQuestionWithAnswers()
+    public function testShowDisplaysQuestionWithAnswers(): void
     {
         $question = $this->createQuestionWithAnswers();
 
@@ -21,7 +21,7 @@ class QuestionControllerTest extends FeatureTestCase
         $this->assertObjectHasAttribute('answers', $viewData);
     }
 
-    public function testShowDisplaysQuestionWithoutAnswers()
+    public function testShowDisplaysQuestionWithoutAnswers(): void
     {
         $question = $this->createQuestion();
 
@@ -32,14 +32,14 @@ class QuestionControllerTest extends FeatureTestCase
         $response->assertViewHas('data');
     }
 
-    public function testCreateRequiresAuthentication()
+    public function testCreateRequiresAuthentication(): void
     {
         $response = $this->get('/questions/new');
 
         $response->assertRedirect('/login');
     }
 
-    public function testCreateDisplaysFormWhenAuthenticated()
+    public function testCreateDisplaysFormWhenAuthenticated(): void
     {
         $this->actingAsUser();
 
@@ -49,7 +49,7 @@ class QuestionControllerTest extends FeatureTestCase
         $response->assertViewIs('question.create');
     }
 
-    public function testStoreRequiresAuthentication()
+    public function testStoreRequiresAuthentication(): void
     {
         $response = $this->post('/questions', [
             'title' => 'Test Question',
@@ -59,9 +59,10 @@ class QuestionControllerTest extends FeatureTestCase
         $response->assertRedirect('/login');
     }
 
-    public function testStoreCreatesQuestionWhenAuthenticated()
+    public function testStoreCreatesQuestionWhenAuthenticated(): void
     {
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
 
         $questionData = [
             'title' => 'Test Question Title',
@@ -80,7 +81,7 @@ class QuestionControllerTest extends FeatureTestCase
         $response->assertRedirect();
     }
 
-    public function testStoreRedirectsToQuestionShow()
+    public function testStoreRedirectsToQuestionShow(): void
     {
         $this->actingAsUser();
 
@@ -93,7 +94,7 @@ class QuestionControllerTest extends FeatureTestCase
         $this->assertStringContainsString('/questions/', $response->headers->get('location'));
     }
 
-    public function testStoreHandlesEmptyData()
+    public function testStoreHandlesEmptyData(): void
     {
         $this->actingAsUser();
 

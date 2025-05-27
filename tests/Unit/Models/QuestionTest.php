@@ -13,8 +13,8 @@ class QuestionTest extends TestCase
 {
     use TestHelpers;
 
-    protected $user;
-    protected $question;
+    protected User $user;
+    protected Question $question;
 
     public function setUp(): void
     {

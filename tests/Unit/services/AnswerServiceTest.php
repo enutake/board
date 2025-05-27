@@ -13,8 +13,8 @@ class AnswerServiceTest extends TestCase
 {
     use TestHelpers;
 
-    protected $answerService;
-    protected $answerRepositoryMock;
+    protected AnswerService $answerService;
+    protected AnswerRepository $answerRepositoryMock;
 
     public function setUp(): void
     {
@@ -37,10 +37,11 @@ class AnswerServiceTest extends TestCase
     public function getAnswerListForQuestionPageのテスト()
     {
         $questionId = 1;
-        $expectedAnswerList = collect([
-            (object) ['id' => 1, 'content' => '回答1', 'question_id' => $questionId],
-            (object) ['id' => 2, 'content' => '回答2', 'question_id' => $questionId],
-        ]);
+        
+        // モックオブジェクトを作成（データベースアクセスなし）
+        $answer1 = new Answer(['id' => 1, 'content' => '回答1', 'question_id' => $questionId, 'user_id' => 1]);
+        $answer2 = new Answer(['id' => 2, 'content' => '回答2', 'question_id' => $questionId, 'user_id' => 1]);
+        $expectedAnswerList = new \Illuminate\Database\Eloquent\Collection([$answer1, $answer2]);
         
         $this->answerRepositoryMock
             ->shouldReceive('getAnswerListByQuestion')
@@ -60,7 +61,7 @@ class AnswerServiceTest extends TestCase
     public function getAnswerListForQuestionPageで空のコレクションが返されても正常に処理されること()
     {
         $questionId = 999;
-        $expectedAnswerList = collect([]);
+        $expectedAnswerList = new \Illuminate\Database\Eloquent\Collection([]);
         
         $this->answerRepositoryMock
             ->shouldReceive('getAnswerListByQuestion')
@@ -82,8 +83,11 @@ class AnswerServiceTest extends TestCase
         $questionId1 = 1;
         $questionId2 = 2;
         
-        $answerList1 = collect([(object) ['id' => 1, 'question_id' => $questionId1]]);
-        $answerList2 = collect([(object) ['id' => 2, 'question_id' => $questionId2]]);
+        // モックオブジェクトを作成（データベースアクセスなし）
+        $answer1 = new Answer(['id' => 1, 'question_id' => $questionId1, 'user_id' => 1, 'content' => '回答1']);
+        $answer2 = new Answer(['id' => 2, 'question_id' => $questionId2, 'user_id' => 2, 'content' => '回答2']);
+        $answerList1 = new \Illuminate\Database\Eloquent\Collection([$answer1]);
+        $answerList2 = new \Illuminate\Database\Eloquent\Collection([$answer2]);
         
         $this->answerRepositoryMock
             ->shouldReceive('getAnswerListByQuestion')
@@ -191,9 +195,10 @@ class AnswerServiceTest extends TestCase
     public function getAnswerListForQuestionPageでRepositoryから返された値をそのまま返すこと()
     {
         $questionId = 100;
-        $repositoryResult = collect([
-            (object) ['id' => 10, 'content' => 'リポジトリからの回答', 'question_id' => $questionId],
-        ]);
+        
+        // モックオブジェクトを作成（データベースアクセスなし）
+        $answer = new Answer(['id' => 10, 'content' => 'リポジトリからの回答', 'question_id' => $questionId, 'user_id' => 1]);
+        $repositoryResult = new \Illuminate\Database\Eloquent\Collection([$answer]);
         
         $this->answerRepositoryMock
             ->shouldReceive('getAnswerListByQuestion')

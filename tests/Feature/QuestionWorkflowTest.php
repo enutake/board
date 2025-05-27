@@ -6,7 +6,7 @@ use Tests\FeatureTestCase;
 
 class QuestionWorkflowTest extends FeatureTestCase
 {
-    public function testCompleteQuestionCreationWorkflow()
+    public function testCompleteQuestionCreationWorkflow(): void
     {
         $user = $this->createUser([
             'name' => 'Test User',
@@ -44,7 +44,7 @@ class QuestionWorkflowTest extends FeatureTestCase
         $response->assertViewHas('data');
     }
 
-    public function testQuestionDisplayWorkflowWithExistingAnswers()
+    public function testQuestionDisplayWorkflowWithExistingAnswers(): void
     {
         $question = $this->createQuestionWithAnswers([
             'title' => 'Test Question with Answers'
@@ -61,7 +61,7 @@ class QuestionWorkflowTest extends FeatureTestCase
         $this->assertEquals($question->id, $viewData->question->id);
     }
 
-    public function testQuestionBrowsingWorkflow()
+    public function testQuestionBrowsingWorkflow(): void
     {
         $questions = $this->createQuestions(5);
 
@@ -76,7 +76,7 @@ class QuestionWorkflowTest extends FeatureTestCase
         }
     }
 
-    public function testUnauthenticatedUserCannotCreateQuestion()
+    public function testUnauthenticatedUserCannotCreateQuestion(): void
     {
         $response = $this->get('/questions/new');
         $response->assertRedirect('/login');
@@ -88,7 +88,7 @@ class QuestionWorkflowTest extends FeatureTestCase
         $response->assertRedirect('/login');
     }
 
-    public function testEmptyQuestionSubmissionWorkflow()
+    public function testEmptyQuestionSubmissionWorkflow(): void
     {
         $this->actingAsUser();
 
@@ -98,7 +98,7 @@ class QuestionWorkflowTest extends FeatureTestCase
         $response->assertStatus(500);
     }
 
-    public function testQuestionVisibilityWorkflow()
+    public function testQuestionVisibilityWorkflow(): void
     {
         $publicQuestion = $this->createQuestion([
             'title' => 'Public Question'

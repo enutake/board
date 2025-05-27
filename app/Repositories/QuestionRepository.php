@@ -8,17 +8,17 @@ use Illuminate\Support\Facades\DB;
 
 class QuestionRepository
 {
-    public function getQuestionList($questionCount): Collection
+    public function getQuestionList(int $questionCount): Collection
     {
         return Question::take($questionCount)->get();
     }
 
-    public function getQuestionDetailById($questionId): ?Question
+    public function getQuestionDetailById(int $questionId): ?Question
     {
         return Question::find($questionId);
     }
 
-    public function storeQuestion($title, $content, $userId)
+    public function storeQuestion(string $title, string $content, int $userId): Question
     {
         return DB::transaction(function () use ($title, $content, $userId) {
             $result = Question::create(

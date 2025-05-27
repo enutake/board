@@ -13,7 +13,7 @@ class TagMasterTest extends TestCase
 {
     use TestHelpers;
 
-    protected $tagMaster;
+    protected TagMaster $tagMaster;
 
     public function setUp(): void
     {

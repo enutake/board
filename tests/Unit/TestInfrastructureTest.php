@@ -16,7 +16,7 @@ class TestInfrastructureTest extends TestCase
     /**
      * @test
      */
-    public function test_database_connection_works()
+    public function test_database_connection_works(): void
     {
         $this->assertEquals('mysql_testing', config('database.default'));
         $this->assertEquals('board_testing', config('database.connections.mysql_testing.database'));
@@ -25,7 +25,7 @@ class TestInfrastructureTest extends TestCase
     /**
      * @test
      */
-    public function test_factories_work_with_proper_relationships()
+    public function test_factories_work_with_proper_relationships(): void
     {
         $user = $this->createUser();
         $question = $this->createQuestion(['user_id' => $user->id]);
@@ -46,7 +46,7 @@ class TestInfrastructureTest extends TestCase
     /**
      * @test
      */
-    public function test_factory_states_work()
+    public function test_factory_states_work(): void
     {
         $unverifiedUser = factory(User::class)->states('unverified')->create();
         $adminUser = factory(User::class)->states('admin')->create();
@@ -62,7 +62,7 @@ class TestInfrastructureTest extends TestCase
     /**
      * @test
      */
-    public function test_helper_methods_work()
+    public function test_helper_methods_work(): void
     {
         $users = $this->createUsers(3);
         $questions = $this->createQuestions(2);
@@ -76,7 +76,7 @@ class TestInfrastructureTest extends TestCase
     /**
      * @test
      */
-    public function test_database_helper_assertions_work()
+    public function test_database_helper_assertions_work(): void
     {
         $user = $this->createUser(['name' => 'Test User']);
         
@@ -90,7 +90,7 @@ class TestInfrastructureTest extends TestCase
     /**
      * @test
      */
-    public function test_config_class_provides_constants()
+    public function test_config_class_provides_constants(): void
     {
         $this->assertEquals('mysql_testing', TestConfig::TEST_DB_CONNECTION);
         $this->assertEquals('board_testing', TestConfig::TEST_DB_NAME);
@@ -104,13 +104,14 @@ class TestInfrastructureTest extends TestCase
     /**
      * @test
      */
-    public function test_authentication_helpers_work()
+    public function test_authentication_helpers_work(): void
     {
-        $user = $this->actingAsUser();
-        $this->assertInstanceOf(User::class, $user);
+        $user = $this->createUser();
+        $this->actingAsUser($user);
         $this->assertAuthenticatedAs($user);
         
-        $admin = $this->actingAsAdmin();
+        $this->actingAsAdmin();
+        $admin = auth()->user();
         $this->assertInstanceOf(User::class, $admin);
         $this->assertEquals('Admin User', $admin->name);
         $this->assertAuthenticatedAs($admin);

@@ -6,7 +6,7 @@ use Tests\FeatureTestCase;
 
 class RegisterControllerTest extends FeatureTestCase
 {
-    public function testRegistrationFormDisplaysSuccessfully()
+    public function testRegistrationFormDisplaysSuccessfully(): void
     {
         $response = $this->get('/register');
 
@@ -14,7 +14,7 @@ class RegisterControllerTest extends FeatureTestCase
         $response->assertViewIs('auth.register');
     }
 
-    public function testUserCanRegisterWithValidData()
+    public function testUserCanRegisterWithValidData(): void
     {
         $userData = [
             'name' => 'Test User',
@@ -33,7 +33,7 @@ class RegisterControllerTest extends FeatureTestCase
         $this->assertAuthenticated();
     }
 
-    public function testRegistrationValidatesRequiredFields()
+    public function testRegistrationValidatesRequiredFields(): void
     {
         $response = $this->post('/register', []);
 
@@ -41,7 +41,7 @@ class RegisterControllerTest extends FeatureTestCase
         $this->assertGuest();
     }
 
-    public function testRegistrationValidatesEmailFormat()
+    public function testRegistrationValidatesEmailFormat(): void
     {
         $response = $this->post('/register', [
             'name' => 'Test User',
@@ -54,7 +54,7 @@ class RegisterControllerTest extends FeatureTestCase
         $this->assertGuest();
     }
 
-    public function testRegistrationValidatesUniqueEmail()
+    public function testRegistrationValidatesUniqueEmail(): void
     {
         $existingUser = $this->createUser(['email' => 'test@example.com']);
 
@@ -69,7 +69,7 @@ class RegisterControllerTest extends FeatureTestCase
         $this->assertGuest();
     }
 
-    public function testRegistrationValidatesPasswordConfirmation()
+    public function testRegistrationValidatesPasswordConfirmation(): void
     {
         $response = $this->post('/register', [
             'name' => 'Test User',
@@ -82,7 +82,7 @@ class RegisterControllerTest extends FeatureTestCase
         $this->assertGuest();
     }
 
-    public function testRegistrationValidatesPasswordLength()
+    public function testRegistrationValidatesPasswordLength(): void
     {
         $response = $this->post('/register', [
             'name' => 'Test User',

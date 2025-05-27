@@ -6,7 +6,7 @@ use Tests\FeatureTestCase;
 
 class UserAuthenticationTest extends FeatureTestCase
 {
-    public function testCompleteUserRegistrationWorkflow()
+    public function testCompleteUserRegistrationWorkflow(): void
     {
         $response = $this->get('/register');
         $response->assertStatus(200);
@@ -30,7 +30,7 @@ class UserAuthenticationTest extends FeatureTestCase
         $this->assertAuthenticated();
     }
 
-    public function testCompleteUserLoginWorkflow()
+    public function testCompleteUserLoginWorkflow(): void
     {
         $user = $this->createUser([
             'email' => 'test@example.com',
@@ -50,7 +50,7 @@ class UserAuthenticationTest extends FeatureTestCase
         $this->assertAuthenticatedAs($user);
     }
 
-    public function testUserLogoutWorkflow()
+    public function testUserLogoutWorkflow(): void
     {
         $user = $this->actingAsUser();
 
@@ -62,7 +62,7 @@ class UserAuthenticationTest extends FeatureTestCase
         $this->assertGuest();
     }
 
-    public function testAuthenticationRequiredWorkflow()
+    public function testAuthenticationRequiredWorkflow(): void
     {
         $question = $this->createQuestion();
 
@@ -84,9 +84,10 @@ class UserAuthenticationTest extends FeatureTestCase
         $response->assertRedirect('/login');
     }
 
-    public function testAuthenticatedUserAccessWorkflow()
+    public function testAuthenticatedUserAccessWorkflow(): void
     {
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
         $question = $this->createQuestion();
 
         $response = $this->get('/questions/new');
@@ -111,7 +112,7 @@ class UserAuthenticationTest extends FeatureTestCase
         $response->assertRedirect("/questions/{$question->id}");
     }
 
-    public function testInvalidLoginAttemptsWorkflow()
+    public function testInvalidLoginAttemptsWorkflow(): void
     {
         $user = $this->createUser([
             'email' => 'valid@example.com',
@@ -140,7 +141,7 @@ class UserAuthenticationTest extends FeatureTestCase
         $this->assertGuest();
     }
 
-    public function testPasswordValidationWorkflow()
+    public function testPasswordValidationWorkflow(): void
     {
         $response = $this->post('/register', [
             'name' => 'Test User',
@@ -161,7 +162,7 @@ class UserAuthenticationTest extends FeatureTestCase
         $this->assertGuest();
     }
 
-    public function testDuplicateEmailRegistrationWorkflow()
+    public function testDuplicateEmailRegistrationWorkflow(): void
     {
         $existingUser = $this->createUser(['email' => 'existing@example.com']);
 
