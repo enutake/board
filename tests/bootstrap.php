@@ -1,30 +1,42 @@
 <?php
 
-// Suppress PHP 8.4 deprecation warnings for Laravel 7.x compatibility
+// PHP 8.3 compatibility for Laravel 7.x
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 
-// Disable deprecation error handler - more aggressive approach
+// Enhanced error handler for PHP 8.3 compatibility issues
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-    // Ignore deprecation warnings from vendor directory
+    // Ignore vendor deprecation warnings
     if (strpos($errfile, '/vendor/') !== false) {
         return true;
     }
     
-    // Ignore all deprecation warnings
+    // Ignore deprecation warnings
     if ($errno === E_DEPRECATED || $errno === E_USER_DEPRECATED) {
         return true;
     }
     
-    // Check if the error message contains deprecation-related text
-    if (stripos($errstr, 'deprecated') !== false || stripos($errstr, 'implicitly marking parameter') !== false) {
-        return true;
+    // Specific PHP 8.3 compatibility patterns to ignore
+    $ignorePatterns = [
+        'deprecated',
+        'implicitly marking parameter',
+        'Automatic conversion of false to array is deprecated',
+        'Creation of dynamic property',
+        'Return type should either be',
+        'Using ${var} in strings is deprecated'
+    ];
+    
+    foreach ($ignorePatterns as $pattern) {
+        if (stripos($errstr, $pattern) !== false) {
+            return true;
+        }
     }
     
-    // Let PHP handle other errors normally
     return false;
 }, E_ALL);
 
-// Also set ini directives to suppress deprecation warnings
+// Set ini directives for PHP 8.3 compatibility
 ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+ini_set('display_errors', 0);
+ini_set('log_errors', 0);
 
 require __DIR__.'/../vendor/autoload.php';

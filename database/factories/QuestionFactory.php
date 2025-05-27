@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Question::class, function (Faker $faker) {
     return [
-        'title'   => $faker->sentence,
+        'title'   => $faker->sentence(),
         'content' => $faker->text(500),
         'user_id' => function () {
             return factory(\App\Models\User::class)->create()->id;
@@ -17,7 +17,7 @@ $factory->define(Question::class, function (Faker $faker) {
 
 $factory->state(Question::class, 'short', function (Faker $faker) {
     return [
-        'content' => $faker->sentence,
+        'content' => $faker->sentence(),
     ];
 });
 

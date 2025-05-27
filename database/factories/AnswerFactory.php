@@ -19,7 +19,7 @@ $factory->define(Answer::class, function (Faker $faker) {
 
 $factory->state(Answer::class, 'short', function (Faker $faker) {
     return [
-        'content' => $faker->sentence,
+        'content' => $faker->sentence(),
     ];
 });
 
