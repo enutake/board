@@ -106,11 +106,12 @@ class TestInfrastructureTest extends TestCase
      */
     public function test_authentication_helpers_work(): void
     {
-        $user = $this->actingAsUser();
-        $this->assertInstanceOf(User::class, $user);
+        $user = $this->createUser();
+        $this->actingAsUser($user);
         $this->assertAuthenticatedAs($user);
         
-        $admin = $this->actingAsAdmin();
+        $this->actingAsAdmin();
+        $admin = auth()->user();
         $this->assertInstanceOf(User::class, $admin);
         $this->assertEquals('Admin User', $admin->name);
         $this->assertAuthenticatedAs($admin);

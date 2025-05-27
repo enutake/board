@@ -64,7 +64,7 @@ trait TestHelpers
         $user = $user ?: $this->createUser();
         $this->actingAs($user);
 
-        return $user;
+        return $this;
     }
 
     protected function actingAsAdmin(): \Tests\TestCase
@@ -72,7 +72,7 @@ trait TestHelpers
         $admin = factory(User::class)->states('admin')->create();
         $this->actingAs($admin);
 
-        return $admin;
+        return $this;
     }
 
     protected function assertDatabaseHasModel($model, $attributes = []): void
