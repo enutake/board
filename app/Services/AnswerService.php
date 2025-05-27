@@ -10,7 +10,7 @@ class AnswerService
 {
     private AnswerRepository $AnswerRepository;
 
-    public function __construct(AnswerRepository $AnswerRepository): void
+    public function __construct(AnswerRepository $AnswerRepository)
     {
         $this->AnswerRepository = $AnswerRepository;
     }

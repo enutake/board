@@ -8,7 +8,7 @@ class QuestionService
 {
     private QuestionRepository $QuestionRepository;
 
-    public function __construct(QuestionRepository $QuestionRepository): void
+    public function __construct(QuestionRepository $QuestionRepository)
     {
         $this->QuestionRepository = $QuestionRepository;
     }
