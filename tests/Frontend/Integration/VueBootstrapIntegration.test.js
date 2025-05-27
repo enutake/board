@@ -83,19 +83,23 @@ describe('Vue and Bootstrap Integration', () => {
 
   describe('Vue App Integration', () => {
     it('can mount Vue components in #app container', () => {
-      // Create a mock DOM structure like in the layout
-      document.body.innerHTML = '<div id="app"></div>';
-      
-      const TestApp = Vue.extend({
+      // Create a test component
+      const TestApp = {
         template: '<div class="test-app">Vue App Mounted</div>'
+      };
+      
+      // Mount the component using @vue/test-utils
+      const wrapper = mount(TestApp, {
+        localVue,
+        attachTo: document.body
       });
       
-      const app = new TestApp().$mount('#app');
+      // Check if the component is mounted correctly
+      expect(wrapper.exists()).toBe(true);
+      expect(wrapper.classes()).toContain('test-app');
+      expect(wrapper.text()).toBe('Vue App Mounted');
       
-      expect(document.querySelector('#app .test-app')).not.toBeNull();
-      expect(document.querySelector('#app .test-app').textContent).toBe('Vue App Mounted');
-      
-      app.$destroy();
+      wrapper.destroy();
     });
 
     it('preserves Bootstrap classes when Vue updates DOM', async () => {

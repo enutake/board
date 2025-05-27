@@ -86,11 +86,15 @@ describe('ExampleComponent', () => {
     });
 
     it('has no props by default', () => {
-      expect(Object.keys(wrapper.vm.$props)).toHaveLength(0);
+      // ExampleComponent doesn't define any props, so $props might be undefined
+      const props = wrapper.vm.$props || {};
+      expect(Object.keys(props)).toHaveLength(0);
     });
 
     it('has no custom data by default', () => {
-      expect(Object.keys(wrapper.vm.$data)).toHaveLength(0);
+      // ExampleComponent doesn't define any data, so $data might be empty
+      const data = wrapper.vm.$data || {};
+      expect(Object.keys(data)).toHaveLength(0);
     });
   });
 
