@@ -71,11 +71,11 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id): \Illuminate\Contracts\View\View
+    public function show(\App\Models\Question $question): \Illuminate\Contracts\View\View
     {
         $data = new stdClass;
-        $data->question = $this->QuestionService->getQuestionDetail($id);
-        $data->answers  = $this->AnswerService->getAnswerListForQuestionPage($id);
+        $data->question = $this->QuestionService->getQuestionDetail($question->id);
+        $data->answers  = $this->AnswerService->getAnswerListForQuestionPage($question->id);
 
         return view('question.index', ['data' => $data]);
     }

@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 
 trait TestHelpers
 {
-    use RefreshDatabase, WithFaker;
+    use WithFaker;
 
     protected function createUser($attributes = []): User
     {
@@ -97,11 +97,6 @@ trait TestHelpers
     protected function assertResponseDoesNotContainText($text): void
     {
         $this->assertStringNotContainsString($text, $this->response->getContent());
-    }
-
-    protected function refreshTestDatabase(): void
-    {
-        $this->artisan('migrate:fresh');
     }
 
     protected function seedTestData(): void

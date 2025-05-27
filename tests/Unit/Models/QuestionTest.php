@@ -12,6 +12,7 @@ use Tests\TestHelpers;
 class QuestionTest extends TestCase
 {
     use TestHelpers;
+    use \Illuminate\Foundation\Testing\RefreshDatabase;
 
     protected User $user;
     protected Question $question;
@@ -79,7 +80,7 @@ class QuestionTest extends TestCase
      */
     public function usersリレーションでUserモデルと正しく関連付けられていること()
     {
-        $relatedUser = $this->question->users;
+        $relatedUser = $this->question->user;
         
         $this->assertInstanceOf(User::class, $relatedUser);
         $this->assertEquals($this->user->id, $relatedUser->id);
@@ -92,7 +93,7 @@ class QuestionTest extends TestCase
      */
     public function usersリレーションでbelongsTo関係が正しく設定されていること()
     {
-        $relation = $this->question->users();
+        $relation = $this->question->user();
         
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class, $relation);
         $this->assertEquals('user_id', $relation->getForeignKeyName());
@@ -203,8 +204,8 @@ class QuestionTest extends TestCase
         $anotherQuestion = $this->createQuestion(['user_id' => $anotherUser->id]);
         
         $this->assertNotEquals($this->question->user_id, $anotherQuestion->user_id);
-        $this->assertEquals($anotherUser->id, $anotherQuestion->users->id);
-        $this->assertEquals($this->user->id, $this->question->users->id);
+        $this->assertEquals($anotherUser->id, $anotherQuestion->user->id);
+        $this->assertEquals($this->user->id, $this->question->user->id);
     }
 
     /**

@@ -14,6 +14,7 @@ use App\Models\User;
 class QuestionServiceTest extends TestCase
 {
     use TestHelpers;
+    use \Illuminate\Foundation\Testing\RefreshDatabase;
 
     protected QuestionService $questionService;
     protected QuestionRepository $questionRepositoryMock;

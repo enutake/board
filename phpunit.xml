@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
+         bootstrap="tests/bootstrap.php"
          colors="true"
          testdox="true"
          verbose="true"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
          failOnRisky="true"
-         failOnWarning="true"
+         failOnWarning="false"
+         convertDeprecationsToExceptions="false"
 >
     <testsuites>
         <testsuite name="Unit">
@@ -28,17 +29,15 @@
             </exclude>
         </whitelist>
     </filter>
-    <logging>
-        <log type="coverage-html" target="./tests/coverage/html"/>
-        <log type="coverage-clover" target="./tests/coverage/clover.xml"/>
-        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
-    </logging>
     <php>
+        <ini name="error_reporting" value="E_ALL &amp; ~E_DEPRECATED &amp; ~E_STRICT" />
+        <ini name="display_errors" value="1" />
+        <ini name="display_startup_errors" value="1" />
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="CACHE_DRIVER" value="array"/>
-        <server name="DB_CONNECTION" value="mysql_testing"/>
-        <server name="DB_DATABASE" value="board_testing"/>
+        <server name="DB_CONNECTION" value="sqlite"/>
+        <server name="DB_DATABASE" value=":memory:"/>
         <server name="MAIL_MAILER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>

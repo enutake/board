@@ -7,14 +7,11 @@ use Illuminate\Foundation\Testing\WithFaker;
 
 abstract class FeatureTestCase extends TestCase
 {
-    use TestHelpers;
+    use RefreshDatabase, TestHelpers;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
-        // Ensure clean database state for each test
-        $this->refreshDatabase();
     }
 
     /**

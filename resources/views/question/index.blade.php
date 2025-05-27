@@ -11,7 +11,7 @@
                     <div class="card-text mb-3">
                         {{ $data->question->content }}
                     </div>
-                    <div class="card-user text-right small">{{ $data->question->users->name }}さん</div>
+                    <div class="card-user text-right small">{{ $data->question->user->name }}さん</div>
                 </div>
             </div>
             <div class="text-center mb-4"><a href="{{ route('answer.create', $data->question->id) }}" class="answer-question-btn btn btn-primary text-center">この質問に回答する</a></div>
@@ -22,7 +22,7 @@
                     <div class="card-text mb-3">
                         {{ $answer->content }}
                     </div>
-                    <div class="card-user text-right small">{{ $answer->users->name }}さん</div>
+                    <div class="card-user text-right small">{{ $answer->user->name }}さん</div>
                 </div>
             </div>
             @endforeach

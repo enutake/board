@@ -16,7 +16,7 @@ vim \
 libpng-dev \
 libpq-dev \
 default-mysql-client \
-&& docker-php-ext-install pdo_mysql
+&& docker-php-ext-install pdo_mysql bcmath
 
 # # node, npm最新化(nを利用する)
 # RUN apt install -y nodejs npm \

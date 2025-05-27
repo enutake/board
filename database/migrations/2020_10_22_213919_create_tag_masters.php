@@ -13,11 +13,13 @@ class CreateTagMasters extends Migration
      */
     public function up()
     {
-        Schema::create('tag_masters', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('tag_masters')) {
+            Schema::create('tag_masters', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -27,6 +29,6 @@ class CreateTagMasters extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tag_maswers');
+        Schema::dropIfExists('tag_masters');
     }
 }
