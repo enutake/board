@@ -27,7 +27,7 @@ class MigrationSafetyCheck extends Command
     public function handle()
     {
         $this->info('🔍 Starting Migration Safety Check for Laravel Framework Upgrade');
-        $this->newLine();
+        $this->line('');
 
         if ($this->option('backup')) {
             $this->createDatabaseBackup();
@@ -67,7 +67,7 @@ class MigrationSafetyCheck extends Command
 
         $this->line("   Backup path: {$backupPath}");
         $this->info('✅ Database backup preparation completed');
-        $this->newLine();
+        $this->line('');
     }
 
     private function checkFeatureFlags()
@@ -99,7 +99,7 @@ class MigrationSafetyCheck extends Command
             $this->line("     • {$flag}: {$status}");
         }
 
-        $this->newLine();
+        $this->line('');
     }
 
     private function checkDatabaseStructure()
@@ -122,7 +122,7 @@ class MigrationSafetyCheck extends Command
         }
 
         $this->checkForeignKeyConstraints();
-        $this->newLine();
+        $this->line('');
     }
 
     private function checkForeignKeyConstraints()
@@ -164,7 +164,7 @@ class MigrationSafetyCheck extends Command
             $this->warn('   ⚠️  Some migrations may not be applied');
         }
 
-        $this->newLine();
+        $this->line('');
     }
 
     private function testMigrationRollback()
@@ -202,7 +202,7 @@ class MigrationSafetyCheck extends Command
             $this->error('   ❌ Rollback test failed: ' . $e->getMessage());
         }
 
-        $this->newLine();
+        $this->line('');
     }
 
     private function checkDependencies()
@@ -235,7 +235,7 @@ class MigrationSafetyCheck extends Command
             $this->line("   Current Laravel version constraint: {$laravelVersion}");
         }
 
-        $this->newLine();
+        $this->line('');
     }
 
     private function displaySummary()
@@ -255,7 +255,7 @@ class MigrationSafetyCheck extends Command
             $this->line('✅ Dependencies verified');
         }
         
-        $this->newLine();
+        $this->line('');
         $this->info('🎉 Migration safety check completed successfully!');
         
         if ($this->featureFlagService->isEnabled('safe_migration_mode')) {

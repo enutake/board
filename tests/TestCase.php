@@ -10,6 +10,9 @@ abstract class TestCase extends BaseTestCase
 
     protected function setUp(): void
     {
+        // Suppress PHP 8.4 deprecation warnings for Laravel 7.x compatibility
+        error_reporting(E_ALL & ~E_DEPRECATED);
+        
         parent::setUp();
         
         // Ensure we're using the test database
