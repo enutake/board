@@ -20,7 +20,7 @@ abstract class FeatureTestCase extends TestCase
     /**
      * Common setup for authenticated tests
      */
-    protected function setUpAuthenticated($userType = 'user')
+    protected function setUpAuthenticated($userType = 'user'): \Tests\TestCase
     {
         switch ($userType) {
             case 'admin':
@@ -33,7 +33,7 @@ abstract class FeatureTestCase extends TestCase
     /**
      * Test JSON API responses
      */
-    protected function assertJsonApiResponse($status = 200, $structure = [])
+    protected function assertJsonApiResponse($status = 200, $structure = []): self
     {
         $this->assertStatus($status);
         
@@ -47,7 +47,7 @@ abstract class FeatureTestCase extends TestCase
     /**
      * Test successful JSON responses
      */
-    protected function assertJsonSuccess($data = null)
+    protected function assertJsonSuccess($data = null): \Illuminate\Testing\TestResponse
     {
         $expected = ['success' => true];
         
@@ -61,7 +61,7 @@ abstract class FeatureTestCase extends TestCase
     /**
      * Test error JSON responses
      */
-    protected function assertJsonError($message = null, $status = 400)
+    protected function assertJsonError($message = null, $status = 400): \Illuminate\Testing\TestResponse
     {
         $this->assertStatus($status);
         
@@ -77,7 +77,7 @@ abstract class FeatureTestCase extends TestCase
     /**
      * Test validation error responses
      */
-    protected function assertValidationError($fields = [])
+    protected function assertValidationError($fields = []): self
     {
         $this->assertStatus(422);
         
@@ -91,7 +91,7 @@ abstract class FeatureTestCase extends TestCase
     /**
      * Test redirect responses
      */
-    protected function assertRedirectResponse($location = null)
+    protected function assertRedirectResponse($location = null): self
     {
         $this->assertStatus(302);
         
