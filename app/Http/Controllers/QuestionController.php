@@ -53,7 +53,11 @@ class QuestionController extends Controller
      */
     public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
-        //TODO: バリデーションを後で追加する
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+        
         $title   = $request->input('title');
         $content = $request->input('content');
         $userId  = Auth::id();

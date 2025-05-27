@@ -93,9 +93,9 @@ class QuestionWorkflowTest extends FeatureTestCase
         $this->actingAsUser();
 
         $response = $this->post('/questions', []);
-        // バリデーションが実装されていないため、現在は500エラーが発生する
-        // TODO: バリデーション実装後は302とバリデーションエラーを期待する
-        $response->assertStatus(500);
+        // バリデーションが実装されたため、302リダイレクトとバリデーションエラーを期待する
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors(['title', 'content']);
     }
 
     public function testQuestionVisibilityWorkflow(): void
