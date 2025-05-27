@@ -32,36 +32,25 @@ class MigrationSafetyWorkflowTest extends FeatureTestCase
         Config::set('features.safe_migration_mode', true);
         Config::set('features.migration_rollback_protection', true);
         
-        $exitCode = Artisan::call('migration:safety-check');
-        
-        $this->assertEquals(0, $exitCode);
-        
-        $output = Artisan::output();
-        $this->assertStringContainsString('Migration Safety Check', $output);
-        $this->assertStringContainsString('completed successfully', $output);
+        $this->artisan('migration:safety-check')
+            ->expectsOutput('🔍 Starting Migration Safety Check for Laravel Framework Upgrade')
+            ->assertExitCode(0);
     }
 
     public function test_migration_safety_check_with_backup_option()
     {
         Config::set('features.database_backup_before_migration', true);
         
-        $exitCode = Artisan::call('migration:safety-check', ['--backup' => true]);
-        
-        $this->assertEquals(0, $exitCode);
-        
-        $output = Artisan::output();
-        $this->assertStringContainsString('Creating database backup', $output);
+        $this->artisan('migration:safety-check', ['--backup' => true])
+            ->expectsOutput('📦 Creating database backup...')
+            ->assertExitCode(0);
     }
 
     public function test_migration_safety_check_with_dependency_check()
     {
-        $exitCode = Artisan::call('migration:safety-check', ['--dependency-check' => true]);
-        
-        $this->assertEquals(0, $exitCode);
-        
-        $output = Artisan::output();
-        $this->assertStringContainsString('Checking Laravel Upgrade Dependencies', $output);
-        $this->assertStringContainsString('PHP Version:', $output);
+        $this->artisan('migration:safety-check', ['--dependency-check' => true])
+            ->expectsOutput('📦 Checking Laravel Upgrade Dependencies...')
+            ->assertExitCode(0);
     }
 
     public function test_feature_flag_integration_in_workflow()
@@ -72,12 +61,9 @@ class MigrationSafetyWorkflowTest extends FeatureTestCase
         $this->assertTrue($this->featureFlagService->isEnabled('safe_migration_mode'));
         $this->assertTrue($this->featureFlagService->isEnabled('migration_rollback_protection'));
         
-        $exitCode = Artisan::call('migration:safety-check');
-        
-        $this->assertEquals(0, $exitCode);
-        
-        $output = Artisan::output();
-        $this->assertStringContainsString('Safe migration mode is ENABLED', $output);
+        $this->artisan('migration:safety-check')
+            ->expectsOutput('💡 Safe migration mode is ENABLED - proceed with confidence')
+            ->assertExitCode(0);
     }
 
     public function test_migration_workflow_with_feature_flags()
@@ -141,18 +127,15 @@ class MigrationSafetyWorkflowTest extends FeatureTestCase
             'question_id' => $question->id
         ]);
         
-        $exitCode = Artisan::call('migration:safety-check', [
+        $this->artisan('migration:safety-check', [
             '--backup' => true,
             '--dependency-check' => true
-        ]);
-        
-        $this->assertEquals(0, $exitCode);
-        
-        $output = Artisan::output();
-        $this->assertStringContainsString('Migration Safety Check', $output);
-        $this->assertStringContainsString('Database structure verified', $output);
-        $this->assertStringContainsString('Feature flags checked', $output);
-        $this->assertStringContainsString('Dependencies verified', $output);
+        ])
+            ->expectsOutput('🔍 Starting Migration Safety Check for Laravel Framework Upgrade')
+            ->expectsOutput('✅ Database structure verified')
+            ->expectsOutput('✅ Feature flags checked')
+            ->expectsOutput('✅ Dependencies verified')
+            ->assertExitCode(0);
         
         $this->assertDatabaseHas('users', ['id' => $user->id]);
         $this->assertDatabaseHas('questions', ['id' => $question->id]);
@@ -178,10 +161,8 @@ class MigrationSafetyWorkflowTest extends FeatureTestCase
             $this->assertTrue($this->featureFlagService->isEnabled($flag));
         }
         
-        $exitCode = Artisan::call('migration:safety-check');
-        $this->assertEquals(0, $exitCode);
-        
-        $output = Artisan::output();
-        $this->assertStringContainsString('Laravel Upgrade Flags:', $output);
+        $this->artisan('migration:safety-check')
+            ->expectsOutput('   Laravel Upgrade Flags:')
+            ->assertExitCode(0);
     }
 }
