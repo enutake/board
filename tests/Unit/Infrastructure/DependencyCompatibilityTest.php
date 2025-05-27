@@ -203,7 +203,10 @@ class DependencyCompatibilityTest extends TestCase
     {
         $memoryLimit = ini_get('memory_limit');
         
-        if ($memoryLimit !== '-1') {
+        if ($memoryLimit === '-1') {
+            // Memory limit is unlimited, which is adequate
+            $this->assertTrue(true, 'Memory limit is unlimited');
+        } else {
             $memoryBytes = $this->convertToBytes($memoryLimit);
             $minimumRequired = 128 * 1024 * 1024; // 128MB
             
