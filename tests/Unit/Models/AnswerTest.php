@@ -12,6 +12,7 @@ use Tests\TestHelpers;
 class AnswerTest extends TestCase
 {
     use TestHelpers;
+    use \Illuminate\Foundation\Testing\RefreshDatabase;
 
     protected User $user;
     protected Question $question;
@@ -84,7 +85,7 @@ class AnswerTest extends TestCase
      */
     public function usersリレーションでUserモデルと正しく関連付けられていること()
     {
-        $relatedUser = $this->answer->users;
+        $relatedUser = $this->answer->user;
         
         $this->assertInstanceOf(User::class, $relatedUser);
         $this->assertEquals($this->user->id, $relatedUser->id);
@@ -97,7 +98,7 @@ class AnswerTest extends TestCase
      */
     public function usersリレーションでbelongsTo関係が正しく設定されていること()
     {
-        $relation = $this->answer->users();
+        $relation = $this->answer->user();
         
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class, $relation);
         $this->assertEquals('user_id', $relation->getForeignKeyName());
@@ -109,7 +110,7 @@ class AnswerTest extends TestCase
      */
     public function questionsリレーションでQuestionモデルと正しく関連付けられていること()
     {
-        $relatedQuestion = $this->answer->questions;
+        $relatedQuestion = $this->answer->question;
         
         $this->assertInstanceOf(Question::class, $relatedQuestion);
         $this->assertEquals($this->question->id, $relatedQuestion->id);
@@ -122,7 +123,7 @@ class AnswerTest extends TestCase
      */
     public function questionsリレーションでbelongsTo関係が正しく設定されていること()
     {
-        $relation = $this->answer->questions();
+        $relation = $this->answer->question();
         
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class, $relation);
         $this->assertEquals('question_id', $relation->getForeignKeyName());
@@ -187,8 +188,8 @@ class AnswerTest extends TestCase
         ]);
         
         $this->assertNotEquals($this->answer->user_id, $anotherAnswer->user_id);
-        $this->assertEquals($anotherUser->id, $anotherAnswer->users->id);
-        $this->assertEquals($this->user->id, $this->answer->users->id);
+        $this->assertEquals($anotherUser->id, $anotherAnswer->user->id);
+        $this->assertEquals($this->user->id, $this->answer->user->id);
     }
 
     /**
@@ -203,8 +204,8 @@ class AnswerTest extends TestCase
         ]);
         
         $this->assertNotEquals($this->answer->question_id, $anotherAnswer->question_id);
-        $this->assertEquals($anotherQuestion->id, $anotherAnswer->questions->id);
-        $this->assertEquals($this->question->id, $this->answer->questions->id);
+        $this->assertEquals($anotherQuestion->id, $anotherAnswer->question->id);
+        $this->assertEquals($this->question->id, $this->answer->question->id);
     }
 
     /**

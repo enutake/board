@@ -10,7 +10,7 @@
                     <div class="card-text mb-3">
                         {{ $data->question->content }}
                     </div>
-                    <div class="card-user text-right small">{{ $data->question->users->name }}さん</div>
+                    <div class="card-user text-right small">{{ $data->question->user->name }}さん</div>
                 </div>
             </div>
             @if ($errors->any())

@@ -14,6 +14,7 @@ use Exception;
 class AnswerRepositoryTest extends TestCase
 {
     use TestHelpers;
+    use \Illuminate\Foundation\Testing\RefreshDatabase;
 
     protected AnswerRepository $answerRepository;
     protected User $user;

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 class QuestionRepositoryTest extends TestCase
 {
     use TestHelpers;
+    use \Illuminate\Foundation\Testing\RefreshDatabase;
 
     protected QuestionRepository $questionRepository;
     protected User $user;

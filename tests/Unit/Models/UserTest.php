@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 class UserTest extends TestCase
 {
     use TestHelpers;
+    use \Illuminate\Foundation\Testing\RefreshDatabase;
 
     protected User $user;
 

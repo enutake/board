@@ -12,6 +12,7 @@ use Tests\TestHelpers;
 class AnswerServiceTest extends TestCase
 {
     use TestHelpers;
+    use \Illuminate\Foundation\Testing\RefreshDatabase;
 
     protected AnswerService $answerService;
     protected AnswerRepository $answerRepositoryMock;

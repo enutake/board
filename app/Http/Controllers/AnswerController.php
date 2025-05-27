@@ -42,7 +42,7 @@ class AnswerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, int $questionId): \Illuminate\Contracts\View\View
+    public function create(Request $request, \App\Models\Question $question): \Illuminate\Contracts\View\View
     {
         $userId = Auth::id();
         if ($userId === null) {
@@ -51,12 +51,12 @@ class AnswerController extends Controller
         session(
             [
                 'userId' => $userId,
-                'questionId' => $questionId
+                'questionId' => $question->id
             ],
         );
 
         $data = new stdClass;
-        $data->question = $this->QuestionService->getQuestionDetail($questionId);
+        $data->question = $this->QuestionService->getQuestionDetail($question->id);
         return view('answer', ['data' => $data]);
     }
 
