@@ -45,6 +45,9 @@ class AnswerController extends Controller
     public function create(Request $request, int $questionId): \Illuminate\Contracts\View\View
     {
         $userId = Auth::id();
+        if ($userId === null) {
+            abort(401, 'Unauthorized');
+        }
         session(
             [
                 'userId' => $userId,
@@ -68,10 +71,19 @@ class AnswerController extends Controller
         $request->session()->regenerate();
 
         $questionId = $request->session()->get('questionId');
-        $this->AnswerService->storeAnswer($request->input('content'), $request->session()->get('userId'), $questionId);
+        $userId = $request->session()->get('userId');
+        if ($userId === null) {
+            abort(401, 'Unauthorized');
+        }
+        
+        // Ensure proper type casting
+        $userIdInt = (int) $userId;
+        $questionIdInt = (int) $questionId;
+        
+        $this->AnswerService->storeAnswer($request->input('content'), $userIdInt, $questionIdInt);
 
         $request->session()->forget('questionId');
-        return redirect()->route('question.show', $questionId);
+        return redirect()->route('question.show', $questionIdInt);
     }
 
     /**

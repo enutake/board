@@ -24,16 +24,16 @@ class Answer extends Model
 
     public function users(): BelongsTo
     {
-        return $this->belongsTo('App\Models\User', 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function questions(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Question', 'question_id', 'id');
+        return $this->belongsTo(Question::class, 'question_id', 'id');
     }
 
     public function tagMasters(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\TagMaster', 'tag_masters', 'id', 'id');
+        return $this->belongsToMany(TagMaster::class, 'tag_masters', 'id', 'id');
     }
 }

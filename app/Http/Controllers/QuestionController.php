@@ -57,6 +57,9 @@ class QuestionController extends Controller
         $title   = $request->input('title');
         $content = $request->input('content');
         $userId  = Auth::id();
+        if ($userId === null) {
+            abort(401, 'Unauthorized');
+        }
         $result = $this->QuestionService->storeQuestion($title, $content, $userId);
 
         return redirect()->route('question.show', $result->id);
