@@ -61,7 +61,8 @@ class QuestionControllerTest extends FeatureTestCase
 
     public function testStoreCreatesQuestionWhenAuthenticated(): void
     {
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
 
         $questionData = [
             'title' => 'Test Question Title',

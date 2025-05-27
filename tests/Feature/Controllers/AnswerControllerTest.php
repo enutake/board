@@ -33,7 +33,8 @@ class AnswerControllerTest extends FeatureTestCase
     public function testCreateSetsSessionData(): void
     {
         $question = $this->createQuestion();
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
 
         $response = $this->get("/questions/{$question->id}/answers/new");
 
@@ -54,7 +55,8 @@ class AnswerControllerTest extends FeatureTestCase
     public function testStoreCreatesAnswerWhenAuthenticated(): void
     {
         $question = $this->createQuestion();
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
 
         $answerContent = 'This is a test answer content that meets minimum length requirements';
 
@@ -77,7 +79,8 @@ class AnswerControllerTest extends FeatureTestCase
     public function testStoreValidatesAnswerContent(): void
     {
         $question = $this->createQuestion();
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
 
         $response = $this->withSession([
             'userId' => $user->id,
@@ -95,7 +98,8 @@ class AnswerControllerTest extends FeatureTestCase
     public function testStoreValidatesAnswerContentTooLong(): void
     {
         $question = $this->createQuestion();
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
 
         $longContent = str_repeat('a', 301);
 
@@ -115,7 +119,8 @@ class AnswerControllerTest extends FeatureTestCase
     public function testStoreRequiresAnswerContent(): void
     {
         $question = $this->createQuestion();
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
 
         $response = $this->withSession([
             'userId' => $user->id,
@@ -128,7 +133,8 @@ class AnswerControllerTest extends FeatureTestCase
     public function testStoreClearsSessionAfterSubmission(): void
     {
         $question = $this->createQuestion();
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
 
         $response = $this->withSession([
             'userId' => $user->id,

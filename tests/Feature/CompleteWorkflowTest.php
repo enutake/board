@@ -173,7 +173,8 @@ class CompleteWorkflowTest extends FeatureTestCase
 
     public function testValidationErrorRecoveryWorkflow(): void
     {
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
 
         $response = $this->post('/questions', [
             'title' => '',

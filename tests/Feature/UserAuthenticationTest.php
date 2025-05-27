@@ -86,7 +86,8 @@ class UserAuthenticationTest extends FeatureTestCase
 
     public function testAuthenticatedUserAccessWorkflow(): void
     {
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
         $question = $this->createQuestion();
 
         $response = $this->get('/questions/new');

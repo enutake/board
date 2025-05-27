@@ -19,7 +19,7 @@ class QuestionController extends Controller
      *
      * @return void
      */
-    public function __construct(QuestionService $QuestionService, AnswerService $AnswerService): void
+    public function __construct(QuestionService $QuestionService, AnswerService $AnswerService)
     {
         $this->QuestionService = $QuestionService;
         $this->AnswerService   = $AnswerService;

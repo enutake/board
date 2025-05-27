@@ -19,6 +19,10 @@ class QuestionService
     public function getQuestionListForTop(): \Illuminate\Database\Eloquent\Collection
     {
         $toppageQuestionCount = config('page.toppage.questions.count', 10);
+        // nullの場合はデフォルト値を使用
+        if (is_null($toppageQuestionCount)) {
+            $toppageQuestionCount = 10;
+        }
         return $this->QuestionRepository->getQuestionList($toppageQuestionCount);
     }
 

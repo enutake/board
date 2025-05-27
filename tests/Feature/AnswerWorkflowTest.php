@@ -52,7 +52,8 @@ class AnswerWorkflowTest extends FeatureTestCase
     public function testAnswerValidationWorkflow(): void
     {
         $question = $this->createQuestion();
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
 
         $this->withSession([
             'userId' => $user->id,
@@ -121,7 +122,8 @@ class AnswerWorkflowTest extends FeatureTestCase
     public function testAnswerSessionManagementWorkflow(): void
     {
         $question = $this->createQuestion();
-        $user = $this->actingAsUser();
+        $user = $this->createUser();
+        $this->actingAs($user);
 
         $response = $this->get("/questions/{$question->id}/answers/new");
         $response->assertSessionHas('userId', $user->id);
