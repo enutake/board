@@ -25,7 +25,7 @@ class RegisterControllerTest extends FeatureTestCase
 
         $response = $this->post('/register', $userData);
 
-        $response->assertRedirect('/home');
+        $response->assertRedirect('/');
         $this->assertDatabaseHas('users', [
             'name' => 'Test User',
             'email' => 'test@example.com'

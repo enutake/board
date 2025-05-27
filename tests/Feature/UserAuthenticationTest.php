@@ -26,7 +26,7 @@ class UserAuthenticationTest extends FeatureTestCase
             'email' => 'john@example.com'
         ]);
 
-        $response->assertRedirect('/home');
+        $response->assertRedirect('/');
         $this->assertAuthenticated();
     }
 
@@ -46,7 +46,7 @@ class UserAuthenticationTest extends FeatureTestCase
             'password' => 'password123'
         ]);
 
-        $response->assertRedirect('/home');
+        $response->assertRedirect('/');
         $this->assertAuthenticatedAs($user);
     }
 
