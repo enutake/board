@@ -6,7 +6,7 @@ use Tests\FeatureTestCase;
 
 class HomeControllerTest extends FeatureTestCase
 {
-    public function testIndexDisplaysQuestionsSuccessfully()
+    public function testIndexDisplaysQuestionsSuccessfully(): void
     {
         $questions = $this->createQuestions(3);
 
@@ -20,7 +20,7 @@ class HomeControllerTest extends FeatureTestCase
         $this->assertObjectHasAttribute('questions', $viewData);
     }
 
-    public function testIndexDisplaysWithoutQuestionsSuccessfully()
+    public function testIndexDisplaysWithoutQuestionsSuccessfully(): void
     {
         $response = $this->get('/');
 
@@ -29,7 +29,7 @@ class HomeControllerTest extends FeatureTestCase
         $response->assertViewHas('data');
     }
 
-    public function testIndexUsesQuestionService()
+    public function testIndexUsesQuestionService(): void
     {
         $this->createQuestions(5);
 

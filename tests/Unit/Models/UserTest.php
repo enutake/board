@@ -13,7 +13,7 @@ class UserTest extends TestCase
 {
     use TestHelpers;
 
-    protected $user;
+    protected User $user;
 
     public function setUp(): void
     {

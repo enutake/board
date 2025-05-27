@@ -6,7 +6,7 @@ use Tests\FeatureTestCase;
 
 class AnswerWorkflowTest extends FeatureTestCase
 {
-    public function testCompleteAnswerCreationWorkflow()
+    public function testCompleteAnswerCreationWorkflow(): void
     {
         $question = $this->createQuestion([
             'title' => 'Test Question for Answer'
@@ -49,7 +49,7 @@ class AnswerWorkflowTest extends FeatureTestCase
         $this->assertObjectHasAttribute('answers', $viewData);
     }
 
-    public function testAnswerValidationWorkflow()
+    public function testAnswerValidationWorkflow(): void
     {
         $question = $this->createQuestion();
         $user = $this->actingAsUser();
@@ -74,7 +74,7 @@ class AnswerWorkflowTest extends FeatureTestCase
         $response->assertSessionHasErrors(['content']);
     }
 
-    public function testMultipleAnswersWorkflow()
+    public function testMultipleAnswersWorkflow(): void
     {
         $question = $this->createQuestion();
         $users = $this->createUsers(3);
@@ -105,7 +105,7 @@ class AnswerWorkflowTest extends FeatureTestCase
         $this->assertObjectHasAttribute('answers', $viewData);
     }
 
-    public function testUnauthenticatedUserCannotCreateAnswer()
+    public function testUnauthenticatedUserCannotCreateAnswer(): void
     {
         $question = $this->createQuestion();
 
@@ -118,7 +118,7 @@ class AnswerWorkflowTest extends FeatureTestCase
         $response->assertRedirect('/login');
     }
 
-    public function testAnswerSessionManagementWorkflow()
+    public function testAnswerSessionManagementWorkflow(): void
     {
         $question = $this->createQuestion();
         $user = $this->actingAsUser();
@@ -138,7 +138,7 @@ class AnswerWorkflowTest extends FeatureTestCase
         $response->assertRedirect("/questions/{$question->id}");
     }
 
-    public function testAnswerDisplayInQuestionWorkflow()
+    public function testAnswerDisplayInQuestionWorkflow(): void
     {
         $question = $this->createQuestionWithAnswers([], 2);
 

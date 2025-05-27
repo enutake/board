@@ -13,9 +13,9 @@ class AnswerTest extends TestCase
 {
     use TestHelpers;
 
-    protected $user;
-    protected $question;
-    protected $answer;
+    protected User $user;
+    protected Question $question;
+    protected Answer $answer;
 
     public function setUp(): void
     {

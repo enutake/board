@@ -13,8 +13,8 @@ class AnswerServiceTest extends TestCase
 {
     use TestHelpers;
 
-    protected $answerService;
-    protected $answerRepositoryMock;
+    protected AnswerService $answerService;
+    protected AnswerRepository $answerRepositoryMock;
 
     public function setUp(): void
     {

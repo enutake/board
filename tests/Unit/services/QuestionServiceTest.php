@@ -15,8 +15,8 @@ class QuestionServiceTest extends TestCase
 {
     use TestHelpers;
 
-    protected $questionService;
-    protected $questionRepositoryMock;
+    protected QuestionService $questionService;
+    protected QuestionRepository $questionRepositoryMock;
 
     public function setUp(): void
     {

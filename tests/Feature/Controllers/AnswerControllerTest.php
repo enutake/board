@@ -6,7 +6,7 @@ use Tests\FeatureTestCase;
 
 class AnswerControllerTest extends FeatureTestCase
 {
-    public function testCreateRequiresAuthentication()
+    public function testCreateRequiresAuthentication(): void
     {
         $question = $this->createQuestion();
 
@@ -15,7 +15,7 @@ class AnswerControllerTest extends FeatureTestCase
         $response->assertRedirect('/login');
     }
 
-    public function testCreateDisplaysFormWhenAuthenticated()
+    public function testCreateDisplaysFormWhenAuthenticated(): void
     {
         $question = $this->createQuestion();
         $this->actingAsUser();
@@ -30,7 +30,7 @@ class AnswerControllerTest extends FeatureTestCase
         $this->assertObjectHasAttribute('question', $viewData);
     }
 
-    public function testCreateSetsSessionData()
+    public function testCreateSetsSessionData(): void
     {
         $question = $this->createQuestion();
         $user = $this->actingAsUser();
@@ -42,7 +42,7 @@ class AnswerControllerTest extends FeatureTestCase
         $response->assertSessionHas('questionId', $question->id);
     }
 
-    public function testStoreRequiresAuthentication()
+    public function testStoreRequiresAuthentication(): void
     {
         $response = $this->post('/answers', [
             'content' => 'This is a test answer content that meets minimum length requirements'
@@ -51,7 +51,7 @@ class AnswerControllerTest extends FeatureTestCase
         $response->assertRedirect('/login');
     }
 
-    public function testStoreCreatesAnswerWhenAuthenticated()
+    public function testStoreCreatesAnswerWhenAuthenticated(): void
     {
         $question = $this->createQuestion();
         $user = $this->actingAsUser();
@@ -74,7 +74,7 @@ class AnswerControllerTest extends FeatureTestCase
         $response->assertRedirect("/questions/{$question->id}");
     }
 
-    public function testStoreValidatesAnswerContent()
+    public function testStoreValidatesAnswerContent(): void
     {
         $question = $this->createQuestion();
         $user = $this->actingAsUser();
@@ -92,7 +92,7 @@ class AnswerControllerTest extends FeatureTestCase
         ]);
     }
 
-    public function testStoreValidatesAnswerContentTooLong()
+    public function testStoreValidatesAnswerContentTooLong(): void
     {
         $question = $this->createQuestion();
         $user = $this->actingAsUser();
@@ -112,7 +112,7 @@ class AnswerControllerTest extends FeatureTestCase
         ]);
     }
 
-    public function testStoreRequiresAnswerContent()
+    public function testStoreRequiresAnswerContent(): void
     {
         $question = $this->createQuestion();
         $user = $this->actingAsUser();
@@ -125,7 +125,7 @@ class AnswerControllerTest extends FeatureTestCase
         $response->assertSessionHasErrors(['content']);
     }
 
-    public function testStoreClearsSessionAfterSubmission()
+    public function testStoreClearsSessionAfterSubmission(): void
     {
         $question = $this->createQuestion();
         $user = $this->actingAsUser();

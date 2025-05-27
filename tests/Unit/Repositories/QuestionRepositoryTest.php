@@ -13,8 +13,8 @@ class QuestionRepositoryTest extends TestCase
 {
     use TestHelpers;
 
-    protected $questionRepository;
-    protected $user;
+    protected QuestionRepository $questionRepository;
+    protected User $user;
 
     public function setUp(): void
     {

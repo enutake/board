@@ -15,10 +15,10 @@ class AnswerRepositoryTest extends TestCase
 {
     use TestHelpers;
 
-    protected $answerRepository;
-    protected $user;
-    protected $question;
-    protected $answer;
+    protected AnswerRepository $answerRepository;
+    protected User $user;
+    protected Question $question;
+    protected Answer $answer;
 
     public function setUp(): void
     {

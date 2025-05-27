@@ -6,7 +6,7 @@ use Tests\FeatureTestCase;
 
 class LoginControllerTest extends FeatureTestCase
 {
-    public function testLoginFormDisplaysSuccessfully()
+    public function testLoginFormDisplaysSuccessfully(): void
     {
         $response = $this->get('/login');
 
@@ -14,7 +14,7 @@ class LoginControllerTest extends FeatureTestCase
         $response->assertViewIs('auth.login');
     }
 
-    public function testUserCanLoginWithValidCredentials()
+    public function testUserCanLoginWithValidCredentials(): void
     {
         $user = $this->createUser([
             'email' => 'test@example.com',
@@ -30,7 +30,7 @@ class LoginControllerTest extends FeatureTestCase
         $this->assertAuthenticatedAs($user);
     }
 
-    public function testUserCannotLoginWithInvalidCredentials()
+    public function testUserCannotLoginWithInvalidCredentials(): void
     {
         $user = $this->createUser([
             'email' => 'test@example.com',
@@ -46,7 +46,7 @@ class LoginControllerTest extends FeatureTestCase
         $this->assertGuest();
     }
 
-    public function testLoginValidatesRequiredFields()
+    public function testLoginValidatesRequiredFields(): void
     {
         $response = $this->post('/login', []);
 
@@ -54,7 +54,7 @@ class LoginControllerTest extends FeatureTestCase
         $this->assertGuest();
     }
 
-    public function testLoginValidatesEmailFormat()
+    public function testLoginValidatesEmailFormat(): void
     {
         $response = $this->post('/login', [
             'email' => 'invalid-email',
@@ -65,7 +65,7 @@ class LoginControllerTest extends FeatureTestCase
         $this->assertGuest();
     }
 
-    public function testUserCanLogout()
+    public function testUserCanLogout(): void
     {
         $user = $this->actingAsUser();
 
