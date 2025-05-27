@@ -19,6 +19,12 @@ class MigrationSafetyTest extends TestCase
 
     public function test_migration_rollback_safety()
     {
+        // Skip if no migrations to rollback
+        $migrationCount = DB::table('migrations')->count();
+        if ($migrationCount === 0) {
+            $this->markTestSkipped('No migrations to rollback');
+        }
+        
         $this->artisan('migrate:rollback')->assertExitCode(0);
         
         $this->artisan('migrate')->assertExitCode(0);
@@ -30,6 +36,9 @@ class MigrationSafetyTest extends TestCase
 
     public function test_migration_refresh_preserves_structure()
     {
+        // Ensure clean state
+        $this->artisan('migrate:fresh')->assertExitCode(0);
+        
         $originalTables = $this->getTableList();
         
         $this->artisan('migrate:refresh')->assertExitCode(0);

@@ -46,6 +46,8 @@ class MigrationSafetyCheck extends Command
         }
 
         $this->displaySummary();
+        
+        return 0;
     }
 
     private function createDatabaseBackup()
