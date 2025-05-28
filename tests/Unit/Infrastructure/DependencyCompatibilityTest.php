@@ -16,7 +16,7 @@ class DependencyCompatibilityTest extends TestCase
         
         // Laravel 7.x returns just the version number, not the full string
         $this->assertIsString($version);
-        $this->assertRegExp('/^\d+\.\d+\.\d+$/', $version);
+        $this->assertMatchesRegularExpression('/^\d+\.\d+\.\d+$/', $version);
         
         $numericVersion = $this->extractNumericVersion($version);
         $this->assertGreaterThanOrEqual(7.0, $numericVersion);

@@ -60,6 +60,9 @@ return [
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                // MySQL 8.0 compatibility: Use legacy authentication
+                PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET sql_mode='TRADITIONAL,ALLOW_INVALID_DATES'",
             ]) : [],
         ],
 
@@ -80,6 +83,9 @@ return [
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                // MySQL 8.0 compatibility: Use legacy authentication
+                PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET sql_mode='TRADITIONAL,ALLOW_INVALID_DATES'",
             ]) : [],
         ],
 
